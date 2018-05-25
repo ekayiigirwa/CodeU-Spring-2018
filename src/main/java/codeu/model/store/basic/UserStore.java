@@ -103,7 +103,7 @@ public class UserStore {
   }
 
   /**
-   * Update an existing User.
+   * Update an existing User's profile.
    */
   public void updateUser(User user) {
     persistentStorageAgent.writeThrough(user);
