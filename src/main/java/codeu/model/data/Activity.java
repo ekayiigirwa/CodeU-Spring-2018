@@ -2,7 +2,7 @@ package codeu.model.data;
 
 import java.time.Instant;
 
-public class Variables {
+public class Activity {
 
 	private  Instant creation;
 	

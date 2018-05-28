@@ -3,7 +3,7 @@
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.data.User" %>
-<%@ page import="codeu.model.data.Variables" %>
+<%@ page import="codeu.model.data.Activity" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
@@ -59,21 +59,21 @@
     <div id="activityfeed">  
       <ul>
     <%
- 	ArrayList<Variables> events = new ArrayList<Variables>();
+ 	ArrayList<Activity> events = new ArrayList<Activity>();
  	events.addAll(PersistentStorageAgent.getInstance().loadUsers());
  	events.addAll(PersistentStorageAgent.getInstance().loadConversations());
  	events.addAll(PersistentStorageAgent.getInstance().loadMessages());
  	
- 	Collections.sort(events, new Comparator<Variables>() {
+ 	Collections.sort(events, new Comparator<Activity>() {
     @Override
-    public int compare(Variables o1, Variables o2) {
+    public int compare(Activity o1, Activity o2) {
         return o1.getCreationTime().compareTo(o2.getCreationTime());
     }
 	});
 	
 	Collections.reverse(events); 
  	
- 	for(Variables event : events){
+ 	for(Activity event : events){
       		if(event instanceof User){
       		User user = (User) event;
 		      	%>
