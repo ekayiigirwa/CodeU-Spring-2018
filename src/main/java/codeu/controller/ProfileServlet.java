@@ -31,7 +31,7 @@ public class ProfileServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    request.getRequestDispatcher("/WEB-INF/view/Profile.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/view/Profile.JSP").forward(request, response);
   }
 
   
@@ -39,9 +39,9 @@ public class ProfileServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
         
-    String Edits = request.getParameter("AboutMe");
-    System.out.println("Edit my profile: " + Edits);
-    response.sendRedirect("/Profile.jsp");
+    String profile = request.getParameter("AboutMe"); 
+    request.setAttribute("profileUpdate", profile); 
+    response.sendRedirect("/Profile.JSP");
   }
 
 
