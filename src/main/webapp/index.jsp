@@ -29,7 +29,9 @@
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
+    <a href="/Profile.JSP"> AboutMe</a>
     <a href="/about.jsp">About</a>
+    
   </nav>
 
   <div id="container">
@@ -43,6 +45,8 @@
         <li><a href="/login">Login</a> to get started.</li>
         <li>Go to the <a href="/conversations">conversations</a> page to
             create or join a conversation.</li>
+        <li> Go to the <a href="/Profile.JSP"> AboutMe</a> to change your
+        profile. </li>
         <li>View the <a href="/about.jsp">about</a> page to learn more about the
             project.</li>
       </ul>
