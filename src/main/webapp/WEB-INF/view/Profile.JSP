@@ -38,19 +38,16 @@ limitations under the License.
   <h1><%= request.getSession().getAttribute("user") %> Profile</h1>
   <h2>Want to Change Your Profile?</h2>
   <% if (request.getSession().getAttribute("user") != null) { %>
-  <p> About <%= request.getSession().getAttribute("user") %> :  ${profile} </p>
-  
   <form action="/Profile.JSP" method="POST">
-    
-    change your profile: <input type="text" name = "AboutMe"/>
+    <label for "AboutMe"> Edit Your Profile: </label>
+    <input type="text" name = "AboutMe">
     <br/>
-    <input type = "Submit" name = "Edit"/>
-   <% } %>
-
-    
+    <button type = "submit">Edit</button>
   </form>
-
-
+  <% } else { %>
+    <a href="/login">Login</a>
+  <% } %>
+  
 </div>
 </body>
 </html>
