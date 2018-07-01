@@ -28,7 +28,7 @@ public class ActivityFeedServletTest {
   private RequestDispatcher mockRequestDispatcher;
   
   @Before
-  public void setup() throws IOException, ServletException {
+  public void setup() throws IOException {
     activityFeedServlet = new ActivityFeedServlet();
     mockRequest = Mockito.mock(HttpServletRequest.class);
     mockResponse = Mockito.mock(HttpServletResponse.class);

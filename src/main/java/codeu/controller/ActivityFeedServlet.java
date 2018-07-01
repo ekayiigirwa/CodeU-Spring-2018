@@ -42,6 +42,7 @@ public class ActivityFeedServlet extends HttpServlet {
        setConversationStore(ConversationStore.getInstance());
        setMessageStore(MessageStore.getInstance());
 	   setUserStore(UserStore.getInstance());
+	   
 	 }
 	  
 	/**
@@ -50,6 +51,7 @@ public class ActivityFeedServlet extends HttpServlet {
 	 */
 	void setConversationStore(ConversationStore conversationStore) {
 	  this.conversationStore = conversationStore;
+	  
 	}
 
 	/**
@@ -58,6 +60,7 @@ public class ActivityFeedServlet extends HttpServlet {
 	 */
 	void setMessageStore(MessageStore messageStore) {
 	  this.messageStore = messageStore;
+	  
 	}
 	  
 	/**
@@ -66,6 +69,7 @@ public class ActivityFeedServlet extends HttpServlet {
 	 */
 	void setUserStore(UserStore userStore) {
 	  this.userStore = userStore;
+	  
 	}
 
 	/**
@@ -73,7 +77,7 @@ public class ActivityFeedServlet extends HttpServlet {
 	 * activityfeed.jsp.
 	 */
    @Override
-   public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
 	   List<Conversation> conversations = conversationStore.getInstance().getAllConversations();
 	   request.setAttribute("conversations", conversations);
