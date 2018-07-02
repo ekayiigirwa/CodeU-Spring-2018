@@ -19,6 +19,12 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.time.Instant;
+
+
+import codeu.model.data.Conversation;
+import codeu.model.store.basic.ConversationStore;
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -58,11 +64,19 @@ public class UserStore {
   /** The in-memory list of Users. */
   private List<User> users;
 
+
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<>();
   }
+
+/*
+
+  public List<User> getAllUsers() {
+    return users;
+  }*/
+  
 
   /**
    * Access the User object with the given name.
@@ -126,5 +140,15 @@ public class UserStore {
   public void setUsers(List<User> users) {
     this.users = users;
   }
+
+
+  /** Returns number of users */
+public int count(){
+  return users.size();
 }
+
+
+
+}
+
 

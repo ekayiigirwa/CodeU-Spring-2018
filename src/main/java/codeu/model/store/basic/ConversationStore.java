@@ -16,8 +16,11 @@ package codeu.model.store.basic;
 
 import codeu.model.data.Conversation;
 import codeu.model.store.persistence.PersistentStorageAgent;
-import java.util.ArrayList;
-import java.util.List;
+
+import codeu.model.data.User;
+import codeu.model.store.basic.UserStore;
+import java.util.*;
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -26,6 +29,7 @@ import java.util.List;
  */
 public class ConversationStore {
 
+UserStore userStore = UserStore.getInstance();
   /** Singleton instance of ConversationStore. */
   private static ConversationStore instance;
 
@@ -68,7 +72,7 @@ public class ConversationStore {
   public List<Conversation> getAllConversations() {
     return conversations;
   }
-
+  
   /** Add a new conversation to the current set of conversations known to the application. */
   public void addConversation(Conversation conversation) {
     conversations.add(conversation);
@@ -100,4 +104,13 @@ public class ConversationStore {
   public void setConversations(List<Conversation> conversations) {
     this.conversations = conversations;
   }
+
+  //Methods for guided project
+
+/** Returns number of conversations */
+public int count(){
+  return conversations.size();
+}
+
+
 }

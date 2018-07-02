@@ -16,9 +16,13 @@ package codeu.model.store.basic;
 
 import codeu.model.data.Message;
 import codeu.model.store.persistence.PersistentStorageAgent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
+import codeu.model.data.User;
+import codeu.model.store.basic.UserStore;
+import java.util.*;
+
+
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -26,7 +30,7 @@ import java.util.UUID;
  * instance.
  */
 public class MessageStore {
-
+UserStore userStore = UserStore.getInstance();
   /** Singleton instance of MessageStore. */
   private static MessageStore instance;
 
@@ -59,6 +63,7 @@ public class MessageStore {
   /** The in-memory list of Messages. */
   private List<Message> messages;
 
+
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private MessageStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
@@ -89,4 +94,12 @@ public class MessageStore {
   public void setMessages(List<Message> messages) {
     this.messages = messages;
   }
+
+
+  /** Returns number of messages */
+  public int count(){
+  return messages.size();
+  }
+
+
 }

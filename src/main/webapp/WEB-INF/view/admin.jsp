@@ -1,3 +1,13 @@
+<!--<%@ page import="java.util.List" %>
+<%@ page import="codeu.model.store.persistence.PersistentDataStore"
+ %>
+
+<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.data.Message" %>
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.data.User" %>
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +36,6 @@
     
     <h2>Welcome to the Admin Page</h2>
     <p>Authorized admins:</p>
-
-
     <!-- dummy prototype data -->
     <ul>
         <li>Eduige</li>
@@ -35,7 +43,16 @@
         <li>Stephen</li>
     </ul>
 
+  <h1>Statistics</h1>
+  <ul>
+      <li>Users: <%= request.getAttribute("numberOfUsers") %></li>
+      <li>Conversations: <%= request.getAttribute("numberOfConversations")%></li>
+      <li>Messages: <%=request.getAttribute("numberOfMessages") %></li>
+  
 
+  </ul>
+
+ 
    
   </div>
 </body>
