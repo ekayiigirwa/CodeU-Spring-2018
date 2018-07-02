@@ -14,12 +14,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+
+import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.MessageStore;
+
 public class AdminServletTest {
 
   private AdminServlet adminServlet;
   private HttpServletRequest mockRequest;
   private HttpServletResponse mockResponse;
   private RequestDispatcher mockRequestDispatcher;
+  private ConversationStore mockConversationStore;
+  private UserStore mockUserStore;
+  private MessageStore mockMessageStore;
 
   @Before
   public void setup() throws IOException {
@@ -29,12 +37,35 @@ public class AdminServletTest {
     mockRequestDispatcher = Mockito.mock(RequestDispatcher.class);
     Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/admin.jsp"))
     .thenReturn(mockRequestDispatcher);
+
+    mockConversationStore = Mockito.mock(ConversationStore.class);
+    adminServlet.setConversationStore(mockConversationStore);
+
+    mockUserStore = Mockito.mock(UserStore.class);
+    adminServlet.setUserStore(mockUserStore);
+
+    mockMessageStore = Mockito.mock(MessageStore.class);
+    adminServlet.setMessageStore(mockMessageStore);
   }
   
-  @Test
+ @Test
   public void testDoGet() throws IOException, ServletException {
+
+    Mockito.when(mockUserStore.count()).thenReturn(2);
+    Mockito.when(mockConversationStore.count()).thenReturn(2);
+    Mockito.when(mockMessageStore.count()).thenReturn(2);
+
+
     adminServlet.doGet(mockRequest, mockResponse);
+
+
+    Mockito.verify(mockRequest).setAttribute("numberOfUsers", mockUserStore.count());
+    Mockito.verify(mockRequest).setAttribute("numberOfConversations", mockConversationStore.count());
+    Mockito.verify(mockRequest).setAttribute("numberOfMessages", mockMessageStore.count());
+
+
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
+
   }
   
 }

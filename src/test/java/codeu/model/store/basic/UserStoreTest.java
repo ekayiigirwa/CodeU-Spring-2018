@@ -101,6 +101,24 @@ public class UserStoreTest {
     Assert.assertFalse(userStore.isUserRegistered("fake username"));
   }
 
+/** Custom Guided Project tests */
+  @Test
+  public void testCount(){
+
+    int testListSize = userStore.count();
+ 
+    Assert.assertEquals(3,testListSize);
+  }
+
+  @Test
+  public void testCount_empty(){
+    List<User> testList = new ArrayList<User>();
+    userStore.setUsers(testList);
+
+    Assert.assertTrue(testList.isEmpty());
+  }
+
+
   private void assertEquals(User expectedUser, User actualUser) {
     Assert.assertEquals(expectedUser.getId(), actualUser.getId());
     Assert.assertEquals(expectedUser.getName(), actualUser.getName());
