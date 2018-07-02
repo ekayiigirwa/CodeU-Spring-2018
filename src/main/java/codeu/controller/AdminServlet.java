@@ -70,7 +70,7 @@ public class AdminServlet extends HttpServlet {
 
     String newestUser = userStore.getNewestUser();
     String mostActiveUser = conversationStore.mostActive();
-
+    String wordiestUser = messageStore.wordyUser();
 
     request.setAttribute("numberOfUsers", numberOfUsers);
     request.setAttribute("numberOfConversations", numberOfConversations);
@@ -78,6 +78,7 @@ public class AdminServlet extends HttpServlet {
 
     request.setAttribute("newestUser", newestUser);
     request.setAttribute("mostActiveUser", mostActiveUser);
+    request.setAttribute("wordiestUser", wordiestUser);
 
     request.getRequestDispatcher("/WEB-INF/view/admin.jsp").forward(request, response);
   }

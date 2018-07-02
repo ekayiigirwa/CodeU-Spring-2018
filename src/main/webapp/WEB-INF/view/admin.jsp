@@ -40,9 +40,7 @@
       <li>Messages: <%=request.getAttribute("numberOfMessages") %></li>
        <li>Newest User: <%= request.getAttribute("newestUser")  %></li>
       <li>Most Active User: <%= request.getAttribute("mostActiveUser")%></li>
-
-      
-  
+      <li>Wordiest User: <%=request.getAttribute("wordiestUser")%> </li>
 
   </ul>
 
