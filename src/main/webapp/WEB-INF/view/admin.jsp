@@ -39,6 +39,9 @@
       <li>Conversations: <%= request.getAttribute("numberOfConversations")%></li>
       <li>Messages: <%=request.getAttribute("numberOfMessages") %></li>
        <li>Newest User: <%= request.getAttribute("newestUser")  %></li>
+      <li>Most Active User: <%= request.getAttribute("mostActiveUser")%></li>
+
+      
   
 
   </ul>

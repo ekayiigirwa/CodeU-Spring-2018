@@ -69,13 +69,15 @@ public class AdminServlet extends HttpServlet {
  		int numberOfMessages = messageStore.count(); 
 
     String newestUser = userStore.getNewestUser();
+    String mostActiveUser = conversationStore.mostActive();
+
 
     request.setAttribute("numberOfUsers", numberOfUsers);
     request.setAttribute("numberOfConversations", numberOfConversations);
     request.setAttribute("numberOfMessages", numberOfMessages);
 
     request.setAttribute("newestUser", newestUser);
-    
+    request.setAttribute("mostActiveUser", mostActiveUser);
 
     request.getRequestDispatcher("/WEB-INF/view/admin.jsp").forward(request, response);
   }

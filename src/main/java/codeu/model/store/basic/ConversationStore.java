@@ -112,5 +112,77 @@ public int count(){
   return conversations.size();
 }
 
+/** Given a particular message, returns the user that authored the message */
+
+  public User getUserFromCon(Conversation con){
+
+    User currentUser = null;
+    UUID currentId = new UUID(0L, 0L);
+
+    currentId = con.getOwnerId();
+    currentUser = userStore.getUser(currentId);
+    return currentUser;
+  }
+
+/**
+  * Returns a list of users who created messages. users are repeated in  the list accordance
+  * with the number of messages they sent
+  */ 
+public ArrayList<User> getUsersPlusCons(){
+  ArrayList<User> usersWithCons = new ArrayList<User>();
+
+  User user = null;
+  UUID userNameId = new UUID(0L, 0L);
+
+  for (Conversation conversation : conversations) {
+    user = getUserFromCon(conversation);
+    usersWithCons.add(user);
+  }
+    return usersWithCons;
+}
+
+/** Returns most active user based on amount of messages sent */
+  public String mostActive(){
+
+    UserStore userStore = UserStore.getInstance();
+    User currentUser = null;
+    User tempUser = null;  
+
+    String mostActiveUser = null;
+
+    int i;
+    int tempCount = 0;
+    int maxCount = 0;
+
+    /** 
+      *Loads list of all users who created conversations
+      * Create a list that stores each unique user that enters the loop
+      */
+    ArrayList<User> usersWithCons = this.getUsersPlusCons();
+    ArrayList<User> userCheckList = new ArrayList<User>();
+
+    for(i = 0; i < conversations.size();i++){
+
+      currentUser = getUserFromCon(conversations.get(i));
+
+    /**tests to ensure that current user is not the same as any previous users*/
+      if(userCheckList.contains(currentUser)){
+        continue;
+      }else{
+        userCheckList.add(currentUser);
+      }
+
+    /** find number of occurances for currentUser */
+    tempCount = Collections.frequency(usersWithCons, currentUser);
+
+    /** initialize maxCount and keep track of the user with the highest count of conversations*/
+      if(tempCount > maxCount){
+        maxCount = tempCount;
+        mostActiveUser = currentUser.getName();
+      }
+    }
+    return mostActiveUser;
+}
+
 
 }
