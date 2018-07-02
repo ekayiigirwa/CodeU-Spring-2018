@@ -68,9 +68,14 @@ public class AdminServlet extends HttpServlet {
  		int numberOfConversations = conversationStore.count();
  		int numberOfMessages = messageStore.count(); 
 
-    	request.setAttribute("numberOfUsers", numberOfUsers);
-    	request.setAttribute("numberOfConversations", numberOfConversations);
-    	request.setAttribute("numberOfMessages", numberOfMessages);
+    String newestUser = userStore.getNewestUser();
+
+    request.setAttribute("numberOfUsers", numberOfUsers);
+    request.setAttribute("numberOfConversations", numberOfConversations);
+    request.setAttribute("numberOfMessages", numberOfMessages);
+
+    request.setAttribute("newestUser", newestUser);
+    
 
     request.getRequestDispatcher("/WEB-INF/view/admin.jsp").forward(request, response);
   }

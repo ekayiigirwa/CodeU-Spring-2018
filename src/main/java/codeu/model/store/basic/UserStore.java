@@ -72,11 +72,7 @@ public class UserStore {
   }
 
 /*
-
-  public List<User> getAllUsers() {
-    return users;
-  }*/
-  
+ 
 
   /**
    * Access the User object with the given name.
@@ -145,6 +141,39 @@ public class UserStore {
   /** Returns number of users */
 public int count(){
   return users.size();
+}
+
+/** Returns most recently created user */
+public String getNewestUser(){
+    User currentUser;
+    User newUser = null;
+    /**used to store creation times */
+    Instant currentTime;
+    Instant newUserTime = null;
+
+    int i;
+
+  for(i = 0; i < users.size();i++){
+    currentUser = users.get(i);
+    currentTime = currentUser.getCreationTime();
+
+      /** tests for newUser and newUserTime initiation on first iteration */
+    if(newUserTime == null){
+      newUser = currentUser;
+      newUserTime = currentTime;
+
+       continue;
+    }
+    /**
+     * compares current time to the newest user time 
+     * use compareTo() because normal condititonal operators do not work on the Instant object
+     */
+    if(currentTime.compareTo(newUserTime) >= 0){ 
+      newUserTime = currentTime;
+      newUser = currentUser;
+    }  
+  }
+  return newUser.getName();
 }
 
 

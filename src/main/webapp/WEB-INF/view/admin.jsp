@@ -1,13 +1,3 @@
-<!--<%@ page import="java.util.List" %>
-<%@ page import="codeu.model.store.persistence.PersistentDataStore"
- %>
-
-<%@ page import="codeu.model.data.Conversation" %>
-<%@ page import="codeu.model.data.Message" %>
-<%@ page import="codeu.model.store.basic.UserStore" %>
-<%@ page import="codeu.model.data.User" %>
--->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +38,7 @@
       <li>Users: <%= request.getAttribute("numberOfUsers") %></li>
       <li>Conversations: <%= request.getAttribute("numberOfConversations")%></li>
       <li>Messages: <%=request.getAttribute("numberOfMessages") %></li>
+       <li>Newest User: <%= request.getAttribute("newestUser")  %></li>
   
 
   </ul>
