@@ -61,9 +61,10 @@
       <ul>
     <%
  	ArrayList<Activity> events = new ArrayList<Activity>();
- 	events.addAll(PersistentStorageAgent.getInstance().loadUsers());
- 	events.addAll(PersistentStorageAgent.getInstance().loadConversations());
- 	events.addAll(PersistentStorageAgent.getInstance().loadMessages());
+ 	PersistentStorageAgent Instant = PersistentStorageAgent.getInstance();
+ 	events.addAll(Instant.loadUsers());
+ 	events.addAll(Instant.loadConversations());
+ 	events.addAll(Instant.loadMessages());
  	
  	Collections.sort(events, new Comparator<Activity>() {
     @Override
@@ -79,6 +80,7 @@
       		User user = (User) event;
 		      	%>
 		      	<li><strong><%= Date.from(user.getCreationTime()) %>:</strong> <%= user.getName() %> joined! </li>
+		      	<li><strong><%= Date.from(user.getLoginTime()) %>:</strong> <%= user.getName() %> logged in! </li>
 		      	<%
       		}
       		

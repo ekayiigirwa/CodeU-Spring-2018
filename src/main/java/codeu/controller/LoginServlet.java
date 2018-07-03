@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
       return;
     }
 
-    User user = userStore.getUser(username);
+    User user = (User) userStore.getUser(username);
 
     if (!BCrypt.checkpw(password, user.getPasswordHash())) {
       request.setAttribute("error", "Please enter a correct password.");
@@ -85,6 +85,10 @@ public class LoginServlet extends HttpServlet {
     }
     
     request.getSession().setAttribute("user", username);
+    Instant login = Instant.now();
+    request.getSession().setAttribute("login", login);
+    user.setLoginTime(login);
+    userStore.updateUser(user);
     
     
     response.sendRedirect("/conversations");

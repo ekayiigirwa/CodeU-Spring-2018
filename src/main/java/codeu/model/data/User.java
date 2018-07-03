@@ -25,6 +25,7 @@ public class User extends Activity{
   private final Instant creation;
   private Instant login;
   private Instant logout;
+  
 
   /**
    * Constructs a new User.
@@ -33,8 +34,8 @@ public class User extends Activity{
    * @param name the username of this User
    * @param passwordHash the password hash of this User
    * @param creation the creation time of this User
-   * @param login time of this User
-   * @param logout time of this User
+   * @param login the login time of this User
+   * @param logout the logout time of this User
    */
   public User(UUID id, String name, String passwordHash, Instant creation) {
     this.id = id;
@@ -63,4 +64,23 @@ public class User extends Activity{
     return creation;
   }
   
+  /** Sets the Login time of this User. */
+  public void setLoginTime(Instant login) {
+    this.login = login;
+  }
+  
+  /** Sets the Logout time of this User. */
+  public void setLogoutTime(Instant logout) {
+    this.logout = logout;
+  }
+  
+  /** Returns the Login time of this User. */
+  public Instant getLoginTime() {
+    return login;
+  }
+  
+  /** Returns the logout time of this User. */
+  public Instant getlogoutTime() {
+    return logout;
+  }
 }

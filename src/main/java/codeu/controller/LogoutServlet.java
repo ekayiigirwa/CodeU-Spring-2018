@@ -20,6 +20,7 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -71,7 +72,9 @@ public class LogoutServlet extends HttpServlet {
 	  String button = request.getParameter("button");
 	  
       if ("Yes".equals(button)) {
-    	  User user = userStore.getUser(request.getSession().getId());
+//    	  UUID id = (UUID) UUID.fromString(request.getSession().getId());
+//    	  User user = userStore.getUser(id);
+//    	  user.setLogoutTime(Instant.now());
     	  request.getSession().setAttribute("user", null);
     	  response.sendRedirect("/login");
       } 

@@ -69,7 +69,6 @@ public class ActivityFeedServlet extends HttpServlet {
 	 */
 	void setUserStore(UserStore userStore) {
 	  this.userStore = userStore;
-	  
 	}
 
 	/**
@@ -82,7 +81,6 @@ public class ActivityFeedServlet extends HttpServlet {
 	   List<Conversation> conversations = conversationStore.getInstance().getAllConversations();
 	   request.setAttribute("conversations", conversations);
 	   request.getRequestDispatcher("/WEB-INF/view/activityfeed.jsp").forward(request, response);
-	  
    }
   
 
