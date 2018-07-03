@@ -90,7 +90,11 @@ public class ConversationStoreTest {
     Assert.assertTrue(testList.isEmpty());
   }
 
-
+  @Test
+  public void testGetUserFromCon(){
+    Mockito.mock(UserStore.class);
+    UUID mockId = UUID.randomUUID();
+  }
   private void assertEquals(Conversation expectedConversation, Conversation actualConversation) {
     Assert.assertEquals(expectedConversation.getId(), actualConversation.getId());
     Assert.assertEquals(expectedConversation.getOwnerId(), actualConversation.getOwnerId());

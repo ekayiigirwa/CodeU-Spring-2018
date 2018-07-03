@@ -118,6 +118,20 @@ public class UserStoreTest {
     Assert.assertTrue(testList.isEmpty());
   }
 
+@Test
+  public void testGetNewestUser(){
+    String mockNewestUser = userStore.getNewestUser();
+
+    Assert.assertEquals("test_username_three", mockNewestUser);
+  }
+
+    @Test
+  public void testGetNewestUser_emptyUserStore(){
+    List<User> testList = new ArrayList<User>();
+    userStore.setUsers(testList);
+
+    Assert.assertTrue(testList.isEmpty());
+  }
 
   private void assertEquals(User expectedUser, User actualUser) {
     Assert.assertEquals(expectedUser.getId(), actualUser.getId());

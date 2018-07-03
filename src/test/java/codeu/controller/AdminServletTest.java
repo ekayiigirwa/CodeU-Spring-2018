@@ -14,7 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-
+import codeu.model.data.Conversation;
+import codeu.model.data.User;
+import codeu.model.data.Message;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
 import codeu.model.store.basic.MessageStore;
@@ -55,6 +57,10 @@ public class AdminServletTest {
     Mockito.when(mockConversationStore.count()).thenReturn(2);
     Mockito.when(mockMessageStore.count()).thenReturn(2);
 
+    Mockito.when(mockUserStore.getNewestUser()).thenReturn("newUser");
+    Mockito.when(mockConversationStore.mostActive()).thenReturn("mostActiveUser");
+    Mockito.when(mockMessageStore.wordyUser()).thenReturn("wordyUser");
+
 
     adminServlet.doGet(mockRequest, mockResponse);
 
@@ -62,6 +68,12 @@ public class AdminServletTest {
     Mockito.verify(mockRequest).setAttribute("numberOfUsers", mockUserStore.count());
     Mockito.verify(mockRequest).setAttribute("numberOfConversations", mockConversationStore.count());
     Mockito.verify(mockRequest).setAttribute("numberOfMessages", mockMessageStore.count());
+
+    Mockito.verify(mockRequest).setAttribute("newestUser",mockUserStore.getNewestUser());
+    Mockito.verify(mockRequest).setAttribute("mostActiveUser",mockConversationStore.mostActive());
+    Mockito.verify(mockRequest).setAttribute("wordiestUser", mockMessageStore.wordyUser());
+
+
 
 
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
