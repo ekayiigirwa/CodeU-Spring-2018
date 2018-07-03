@@ -176,7 +176,14 @@ public String getNewestUser(){
   return newUser.getName();
 }
 
+public ArrayList<User> getAllUsers(){
+  ArrayList<User> listOfUsers = new ArrayList<User>();
 
+  for(User user: users){
+    listOfUsers.add(user);
+  }
+  return listOfUsers;
+}
 
 }
 

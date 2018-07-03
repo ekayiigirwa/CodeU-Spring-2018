@@ -16,10 +16,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
+<%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
+
+UserStore userStores = (UserStore) request.getAttribute("userStores");
+
 %>
 
 <!DOCTYPE html>
@@ -82,7 +86,19 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <% if (request.getSession().getAttribute("user") != null) { %>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST">
-        <input type="text" name="message">
+        <input type="text" name="message"> <button type="mention">mention</button>
+      
+<%
+    List<User> users =
+      (List<User>) request.getAttribute("users");
+      %>
+        <select>
+          
+        <%  for(User user: users){ %>
+          <option value="<%= user.getName() %>"><%= user.getName() %></option>
+         <% } %>
+        </select>
+
         <br/>
         <button type="submit">Send</button>
     </form>
@@ -96,3 +112,13 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
 </body>
 </html>
+<!-- 
+ PSEEUDO CODE
+
+ to get drop down list of users, ensure that you have a list of userf fomr the conversation being worked on at the time.
+
+ Once you have a list of those users, use a loop and the select tag to create a list of all users in the conversation
+
+ for prototype purposes, create a dropdown with all the users in the app.
+
+ -->
