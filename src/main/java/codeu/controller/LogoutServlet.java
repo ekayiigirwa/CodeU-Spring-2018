@@ -72,9 +72,13 @@ public class LogoutServlet extends HttpServlet {
 	  String button = request.getParameter("button");
 	  
       if ("Yes".equals(button)) {
-//    	  UUID id = (UUID) UUID.fromString(request.getSession().getId());
-//    	  User user = userStore.getUser(id);
-//    	  user.setLogoutTime(Instant.now());
+    	  //UUID id = (UUID) UUID.fromString(request.getSession().getId());
+    	  //User user = userStore.getUser(id);
+    	  User user = userStore.getUser((String) request.getAttribute("user"));
+    	  Instant logout = Instant.now();
+    	  request.getSession().setAttribute("logout", logout);
+    	  user.setLogoutTime(logout);
+    	  userStore.updateUser(user);
     	  request.getSession().setAttribute("user", null);
     	  response.sendRedirect("/login");
       } 

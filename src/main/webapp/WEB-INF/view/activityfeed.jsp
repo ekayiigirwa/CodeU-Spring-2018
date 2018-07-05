@@ -3,6 +3,7 @@
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.data.User" %>
+<%@ page import="codeu.model.data.Login" %>
 <%@ page import="codeu.model.data.Activity" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
@@ -65,7 +66,18 @@
  	events.addAll(Instant.loadUsers());
  	events.addAll(Instant.loadConversations());
  	events.addAll(Instant.loadMessages());
- 	
+ 
+ 	ArrayList<Activity> e = new ArrayList<Activity>();
+ 	e.addAll(events);
+ 
+	for(Activity event : e){
+ 		if(event instanceof User){
+ 			User user = (User) event;
+ 			if(!user.getLoginArr().isEmpty())
+ 			events.addAll(user.getLoginArr());
+ 			}
+ 	}
+ 	 
  	Collections.sort(events, new Comparator<Activity>() {
     @Override
     public int compare(Activity o1, Activity o2) {
@@ -77,14 +89,20 @@
  	
  	for(Activity event : events){
       		if(event instanceof User){
-      		User user = (User) event;
+      			User user = (User) event;
 		      	%>
 		      	<li><strong><%= Date.from(user.getCreationTime()) %>:</strong> <%= user.getName() %> joined! </li>
-		      	<li><strong><%= Date.from(user.getLoginTime()) %>:</strong> <%= user.getName() %> logged in! </li>
+		      	<%
+		      	}
+		      	
+  			else if (event instanceof Login){
+      		Login login = (Login) event;
+      			%>
+		      	<li><strong><%= Date.from(login.getTime()) %>:</strong> <%= login.getName() %> logged in! </li>
 		      	<%
       		}
       		
-      		if (event instanceof Message){
+      		else if (event instanceof Message){
       			Message message = (Message) event;
       			String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
       			String convoName = ConversationStore.getInstance().getConversationWithID(message.getConversationId()).getTitle();
@@ -94,7 +112,7 @@
       			<%
       		}
       		
-      		if (event instanceof Conversation){
+      		else if (event instanceof Conversation){
       		  Conversation conversation = (Conversation) event;
       		  Date convoDate = Date.from(conversation.getCreationTime());
 		      String name = UserStore.getInstance().getUser(conversation.getOwnerId()).getName();
@@ -103,7 +121,7 @@
 		      <%= conversation.getTitle() %></a></li>
 		      <%
       		}
-      	}      
+      	} 
       %>    
       </ul>
  

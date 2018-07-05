@@ -14,6 +14,7 @@
 
 package codeu.controller;
 
+import codeu.model.data.Login;
 import codeu.model.data.User;
 import java.time.Instant;
 import codeu.model.store.basic.UserStore;
@@ -85,11 +86,12 @@ public class LoginServlet extends HttpServlet {
     }
     
     request.getSession().setAttribute("user", username);
-    Instant login = Instant.now();
-    request.getSession().setAttribute("login", login);
-    user.setLoginTime(login);
-    userStore.updateUser(user);
     
+    Instant login = Instant.now();
+    Login time = new Login(login, user.getName());
+    user.getLoginArr().add(time);
+    request.getSession().setAttribute("login", user.getLoginArr());
+    userStore.updateUser(user);
     
     response.sendRedirect("/conversations");
   }
