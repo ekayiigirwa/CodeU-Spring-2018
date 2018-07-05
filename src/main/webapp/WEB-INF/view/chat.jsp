@@ -16,19 +16,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
-<%@ page import="codeu.model.data.User" %>
+<!--<%@ page import="codeu.model.data.User" %>-->
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
 
 UserStore userStores = (UserStore) request.getAttribute("userStores");
-
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
+
   <title><%= conversation.getTitle() %></title>
   <link rel="stylesheet" href="/css/main.css" type="text/css">
 
@@ -72,8 +72,7 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
       <ul>
     <%
       for (Message message : messages) {
-        String author = UserStore.getInstance()
-          .getUser(message.getAuthorId()).getName();
+        String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
     %>
       <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
     <%

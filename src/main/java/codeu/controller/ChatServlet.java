@@ -100,6 +100,7 @@ public class ChatServlet extends HttpServlet {
     List<Message> messages = messageStore.getMessagesInConversation(conversationId);
 
     List<User> users = userStore.getAllUsers();
+    
 
 
     request.setAttribute("conversation", conversation);
