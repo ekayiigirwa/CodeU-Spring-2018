@@ -15,7 +15,9 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
+
 import codeu.model.data.Login;
+import codeu.model.data.Logout;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentDataStoreException;
@@ -167,6 +169,7 @@ public List<User> loadUsers() throws PersistentDataStoreException {
     userEntity.setProperty("username", user.getName());
     userEntity.setProperty("password_hash", user.getPasswordHash());
     userEntity.setProperty("creation_time", user.getCreationTime().toString());
+    
     if(!user.getLoginArr().isEmpty()){
     	ArrayList<Login> login = user.getLoginArr();
     	ArrayList<String> login2 = new ArrayList<String>();
@@ -175,12 +178,15 @@ public List<User> loadUsers() throws PersistentDataStoreException {
     	}
 	userEntity.setProperty("login", login2);
     }
-//    if(user.getLoginTime() != null){
-//    	userEntity.setProperty("login", user.getLoginTime().toString());
-//    }
-//    if(user.getLogoutTime() != null){
-//    	userEntity.setProperty("logout", user.getLogoutTime().toString());
-//    }
+    
+    if(!user.getLogoutArr().isEmpty()){
+    	ArrayList<Logout> logout = user.getLogoutArr();
+    	ArrayList<String> logout2 = new ArrayList<String>();
+    	for(Logout in: logout){
+    		logout2.add(in.getTime().toString());
+    	}
+	userEntity.setProperty("login", logout2);
+    }
     datastore.put(userEntity);
   }
 

@@ -4,6 +4,7 @@
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.data.Login" %>
+<%@ page import="codeu.model.data.Logout" %>
 <%@ page import="codeu.model.data.Activity" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
@@ -74,7 +75,9 @@
  		if(event instanceof User){
  			User user = (User) event;
  			if(!user.getLoginArr().isEmpty())
- 			events.addAll(user.getLoginArr());
+ 				events.addAll(user.getLoginArr());
+ 			if(!user.getLogoutArr().isEmpty())
+ 				events.addAll(user.getLogoutArr());
  			}
  	}
  	 
@@ -99,6 +102,13 @@
       		Login login = (Login) event;
       			%>
 		      	<li><strong><%= Date.from(login.getTime()) %>:</strong> <%= login.getName() %> logged in! </li>
+		      	<%
+      		}
+      		
+      		else if (event instanceof Logout){
+      		Logout logout = (Logout) event;
+      			%>
+		      	<li><strong><%= Date.from(logout.getTime()) %>:</strong> <%= logout.getName() %> logged out! </li>
 		      	<%
       		}
       		

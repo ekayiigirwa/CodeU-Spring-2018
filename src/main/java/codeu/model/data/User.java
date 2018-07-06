@@ -25,9 +25,7 @@ public class User extends Activity{
   private final String passwordHash;
   private final Instant creation;
   static ArrayList<Login> login = new ArrayList<Login>();
-  //private Instant login;
-  private Instant logout;
-  
+  static ArrayList<Logout> logout= new ArrayList<Logout>();
 
   /**
    * Constructs a new User.
@@ -76,13 +74,13 @@ public class User extends Activity{
     this.login = login;
   }
   
-  /** Sets the Logout time of this User. */
-  public void setLogoutTime(Instant logout) {
-    this.logout = logout;
+  /** Returns the Array List of Login Times */
+  public static ArrayList<Logout> getLogoutArr() {
+    return logout;
   }
   
-  /** Returns the logout time of this User. */
-  public Instant getLogoutTime() {
-    return logout;
+  /** Sets the Array List of Login Times */
+  public void setLogoutArr(ArrayList<Logout> logout) {
+    this.logout = logout;
   }
 }
