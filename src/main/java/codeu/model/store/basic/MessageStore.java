@@ -75,9 +75,9 @@ UserStore userStore = UserStore.getInstance();
   }
 
   /** Access the current set of Messages within the given Conversation. */
-  public List<Message> getMessagesInConversation(UUID conversationId) {
+  public ArrayList<Message> getMessagesInConversation(UUID conversationId) {
 
-    List<Message> messagesInConversation = new ArrayList<>();
+    ArrayList<Message> messagesInConversation = new ArrayList<>();
 
     for (Message message : messages) {
       if (message.getConversationId().equals(conversationId)) {
@@ -118,16 +118,40 @@ public ArrayList<User> getUsersPlusMsgs(){
   ArrayList<User> usersWithMessages = new ArrayList<User>();
     // get list of users who created messages and the amount of times they did so
     User user = null;
-     UUID userNameId = new UUID(0L, 0L);
-    for (Message message : messages) {
-        
-        userNameId = message.getAuthorId();
-        user = userStore.getUser(userNameId);
+    for (Message message : messages) {   
+        //userNameId = message.getAuthorId();
+        user = getUserFromMsg(message);
         usersWithMessages.add(user);
     }
 
     return usersWithMessages;
 }
+
+/**
+  *accepts an array with the lsit of all messages in a conversation
+  * returns a list of users in the conversation's messages
+  */
+
+public ArrayList<User> getUsersInConversation(ArrayList<Message> messageList){
+
+  ArrayList<User> usersInConversation = new ArrayList<User>();
+  
+    User user = null;
+    for (Message message : messageList) { 
+
+        user = getUserFromMsg(message);
+  
+      if(usersInConversation.contains(user)){
+        continue;
+      }else{
+         usersInConversation.add(user);
+      }
+    }
+
+    return usersInConversation;
+}
+
+
 
 /** Returns wordiest user based on amount of messages sent */
   public String wordyUser(){

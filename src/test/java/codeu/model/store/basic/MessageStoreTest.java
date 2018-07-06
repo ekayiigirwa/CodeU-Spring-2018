@@ -54,7 +54,7 @@ public class MessageStoreTest {
 
   @Test
   public void testGetMessagesInConversation() {
-    List<Message> resultMessages = messageStore.getMessagesInConversation(CONVERSATION_ID_ONE);
+    ArrayList<Message> resultMessages = messageStore.getMessagesInConversation(CONVERSATION_ID_ONE);
 
     Assert.assertEquals(2, resultMessages.size());
     assertEquals(MESSAGE_ONE, resultMessages.get(0));

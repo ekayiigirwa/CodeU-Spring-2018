@@ -89,14 +89,19 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
       
 <%
     List<User> users =
-      (List<User>) request.getAttribute("users");
+      (List<User>) request.getAttribute("usersInConversation");
       %>
         <select>
-          
-        <%  for(User user: users){ %>
-          <option value="<%= user.getName() %>"><%= user.getName() %></option>
-         <% } %>
-        </select>
+        <%System.out.println(users);%> <!-- For testing -->
+
+        <% for (User user: users){ %>
+        <%if(user.getName() == null){
+          continue;
+        }%>
+         <option value="<%= user.getName() %>"><%= user.getName()%></option>
+        }
+
+        <%}%>
 
         <br/>
         <button type="submit">Send</button>
@@ -112,9 +117,9 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 </body>
 </html>
 <!-- 
- PSEEUDO CODE
+ PSEUDO CODE
 
- to get drop down list of users, ensure that you have a list of userf fomr the conversation being worked on at the time.
+ to get drop down list of users, ensure that you have a list of users fomr the conversation being worked on at the time.
 
  Once you have a list of those users, use a loop and the select tag to create a list of all users in the conversation
 
