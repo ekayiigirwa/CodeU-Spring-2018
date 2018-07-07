@@ -26,7 +26,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 <html>
 
 <head>
-<meta charset="utf-8" >
+<%-- <meta charset="utf-8" > 
+--%>
 <title><%= conversation.getTitle() %></title>
 <link rel="stylesheet" href="/css/main.css" type="text/css">
 
