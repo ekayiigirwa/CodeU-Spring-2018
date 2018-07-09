@@ -152,19 +152,21 @@ public class ChatServlet extends HttpServlet {
             user.getId(),
             cleanedMessageContent,
             Instant.now());
-    
-    Message reaction =
-        new Message(
-            UUID.randomUUID(),
-            conversation.getId(),
-            user.getId(),
-            emoji,
-            Instant.now());
 
-    messageStore.addMessage(message);
-    messageStore.addMessage(reaction);
-    //System.out.println(emojiToISO88591);
-    System.out.println(emoji.getClass());
+    if (emoji != null) {    
+      Message reaction =
+          new Message(
+              UUID.randomUUID(),
+              conversation.getId(),
+              user.getId(),
+              emoji,
+              Instant.now());
+      messageStore.addMessage(reaction);
+    }
+    else {
+      messageStore.addMessage(message);
+    }
+  
     //response.getOutputStream().println(emojiToISO88591);
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);
