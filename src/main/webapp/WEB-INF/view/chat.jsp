@@ -82,10 +82,24 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
     <div id="chat">
       <ul>
     <%
+      String currentUserName= "@" + request.getSession().getAttribute("user");
+
       for (Message message : messages) {
         String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
     %>
-      <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
+      <li><strong><%= author %>:</strong> 
+
+     <%  if(message.getContent().contains(currentUserName)){ %>
+       
+          <strong><%= message.getContent() %></strong>
+       <%} else{%>
+        <%= message.getContent() %>
+      <%  
+       }
+      %>
+      
+
+      </li>
     <%
       }
     %>
