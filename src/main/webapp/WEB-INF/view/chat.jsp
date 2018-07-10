@@ -47,7 +47,7 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
      */
     function mention(){
       var x = document.getElementById("currentUsers").value;
-      y = "@" + x;
+      y = document.getElementById("chatSpace").value + "@" + x;
       document.getElementById("chatSpace").value = y;
       console.log(x);
     }
