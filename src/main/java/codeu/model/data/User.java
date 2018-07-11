@@ -15,6 +15,7 @@
 package codeu.model.data;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /** Class representing a registered user. */
@@ -23,8 +24,10 @@ public class User extends Activity{
   private final String name;
   private final String passwordHash;
   private final Instant creation;
-  private Instant login;
+  static ArrayList<Login> login = new ArrayList<Login>();
+  //private Instant login;
   private Instant logout;
+  
 
   /**
    * Constructs a new User.
@@ -33,8 +36,8 @@ public class User extends Activity{
    * @param name the username of this User
    * @param passwordHash the password hash of this User
    * @param creation the creation time of this User
-   * @param login time of this User
-   * @param logout time of this User
+   * @param login the login time of this User
+   * @param logout the logout time of this User
    */
   public User(UUID id, String name, String passwordHash, Instant creation) {
     this.id = id;
@@ -63,4 +66,23 @@ public class User extends Activity{
     return creation;
   }
   
+  /** Returns the Array List of Login Times */
+  public static ArrayList<Login> getLoginArr() {
+    return login;
+  }
+  
+  /** Sets the Array List of Login Times */
+  public void setLoginArr(ArrayList<Login> login) {
+    this.login = login;
+  }
+  
+  /** Sets the Logout time of this User. */
+  public void setLogoutTime(Instant logout) {
+    this.logout = logout;
+  }
+  
+  /** Returns the logout time of this User. */
+  public Instant getLogoutTime() {
+    return logout;
+  }
 }

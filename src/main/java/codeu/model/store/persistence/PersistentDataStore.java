@@ -15,6 +15,7 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Login;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentDataStoreException;
@@ -26,6 +27,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,7 +55,7 @@ public class PersistentDataStore {
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
    */
-  public List<User> loadUsers() throws PersistentDataStoreException {
+public List<User> loadUsers() throws PersistentDataStoreException {
 
     List<User> users = new ArrayList<>();
 
@@ -68,6 +70,15 @@ public class PersistentDataStore {
         String passwordHash = (String) entity.getProperty("password_hash");
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
         User user = new User(uuid, userName, passwordHash, creationTime);
+//        user.setLoginArr((ArrayList<Login>) entity.getProperty("login"));
+        
+      ArrayList<Login> login = new ArrayList<>();
+      ArrayList<String> str = (ArrayList<String>) (entity.getProperty("login"));
+      for (String i: str){
+      	login.add(new Login(Instant.parse(i), userName));
+      }
+      user.setLoginArr(login);
+        
         users.add(user);
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
@@ -156,6 +167,20 @@ public class PersistentDataStore {
     userEntity.setProperty("username", user.getName());
     userEntity.setProperty("password_hash", user.getPasswordHash());
     userEntity.setProperty("creation_time", user.getCreationTime().toString());
+    if(!user.getLoginArr().isEmpty()){
+    	ArrayList<Login> login = user.getLoginArr();
+    	ArrayList<String> login2 = new ArrayList<String>();
+    	for(Login in: login){
+    		login2.add(in.getTime().toString());
+    	}
+	userEntity.setProperty("login", login2);
+    }
+//    if(user.getLoginTime() != null){
+//    	userEntity.setProperty("login", user.getLoginTime().toString());
+//    }
+//    if(user.getLogoutTime() != null){
+//    	userEntity.setProperty("logout", user.getLogoutTime().toString());
+//    }
     datastore.put(userEntity);
   }
 

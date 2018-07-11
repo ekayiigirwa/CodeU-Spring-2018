@@ -6,7 +6,7 @@ public class Activity {
 
 	private  Instant creation;
 	
-	/** Returns the creation time of this User. */
+	/** Returns the creation time. */
 	  public Instant getCreationTime() {
 	    return creation;
 	  }

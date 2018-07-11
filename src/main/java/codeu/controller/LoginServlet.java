@@ -14,6 +14,7 @@
 
 package codeu.controller;
 
+import codeu.model.data.Login;
 import codeu.model.data.User;
 import java.time.Instant;
 import codeu.model.store.basic.UserStore;
@@ -76,7 +77,7 @@ public class LoginServlet extends HttpServlet {
       return;
     }
 
-    User user = userStore.getUser(username);
+    User user = (User) userStore.getUser(username);
 
     if (!BCrypt.checkpw(password, user.getPasswordHash())) {
       request.setAttribute("error", "Please enter a correct password.");
@@ -86,6 +87,11 @@ public class LoginServlet extends HttpServlet {
     
     request.getSession().setAttribute("user", username);
     
+    Instant login = Instant.now();
+    Login time = new Login(login, user.getName());
+    user.getLoginArr().add(time);
+    request.getSession().setAttribute("login", user.getLoginArr());
+    userStore.updateUser(user);
     
     response.sendRedirect("/conversations");
   }
