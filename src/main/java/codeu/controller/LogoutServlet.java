@@ -16,7 +16,11 @@ package codeu.controller;
 
 import codeu.model.data.User;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.persistence.PersistentStorageAgent;
+
 import java.io.IOException;
+import java.time.Instant;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +71,8 @@ public class LogoutServlet extends HttpServlet {
 	  String button = request.getParameter("button");
 	  
       if ("Yes".equals(button)) {
+    	  User user = userStore.getUser(request.getSession().getId());
+    	  request.getSession().setAttribute("user", null);
     	  response.sendRedirect("/login");
       } 
       if ("No".equals(button)) {

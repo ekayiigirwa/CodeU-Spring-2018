@@ -50,7 +50,6 @@
     <form action="/logout" method="POST">
       <button type="submit" name="button" value="Yes" id="Yes">Yes</button>
       <button type="submit" name="button" value="No" id=No">No</button>
-      
     </form>
       
     </div>

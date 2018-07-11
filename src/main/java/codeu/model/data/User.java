@@ -23,6 +23,8 @@ public class User extends Activity{
   private final String name;
   private final String passwordHash;
   private final Instant creation;
+  private Instant login;
+  private Instant logout;
 
   /**
    * Constructs a new User.
@@ -31,6 +33,8 @@ public class User extends Activity{
    * @param name the username of this User
    * @param passwordHash the password hash of this User
    * @param creation the creation time of this User
+   * @param login time of this User
+   * @param logout time of this User
    */
   public User(UUID id, String name, String passwordHash, Instant creation) {
     this.id = id;
@@ -58,4 +62,5 @@ public class User extends Activity{
   public Instant getCreationTime() {
     return creation;
   }
+  
 }
