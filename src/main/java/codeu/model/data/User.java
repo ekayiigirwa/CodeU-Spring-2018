@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 /** Class representing a registered user. */
-public class User {
+public class User extends Activity{
   private final UUID id;
   private final String name;
   private final String passwordHash;
