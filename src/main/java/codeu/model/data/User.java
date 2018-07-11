@@ -24,8 +24,8 @@ public class User extends Activity{
   private final String name;
   private final String passwordHash;
   private final Instant creation;
-  static ArrayList<Login> login = new ArrayList<Login>();
-  static ArrayList<Logout> logout= new ArrayList<Logout>();
+  public ArrayList<Login> login = new ArrayList<Login>();
+  public ArrayList<Logout> logout= new ArrayList<Logout>();
 
   /**
    * Constructs a new User.
@@ -65,7 +65,7 @@ public class User extends Activity{
   }
   
   /** Returns the Array List of Login Times */
-  public static ArrayList<Login> getLoginArr() {
+  public ArrayList<Login> getLoginArr() {
     return login;
   }
   
@@ -75,7 +75,7 @@ public class User extends Activity{
   }
   
   /** Returns the Array List of Login Times */
-  public static ArrayList<Logout> getLogoutArr() {
+  public ArrayList<Logout> getLogoutArr() {
     return logout;
   }
   

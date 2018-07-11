@@ -52,6 +52,7 @@ public class PersistentDataStoreTest {
     inputUserOne.setLoginArr(loginOne);
     ArrayList<Logout> logoutOne = new ArrayList<Logout>();
     logoutOne.add(new Logout(Instant.ofEpochMilli(1000), nameOne));
+    logoutOne.add(new Logout(Instant.ofEpochMilli(1000), nameOne));
     inputUserOne.setLogoutArr(logoutOne);
 
     UUID idTwo = UUID.fromString("10000001-2222-3333-4444-555555555555");

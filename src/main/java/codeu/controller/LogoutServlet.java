@@ -74,8 +74,6 @@ public class LogoutServlet extends HttpServlet {
 	  String button = request.getParameter("button");
 	  
       if ("Yes".equals(button)) {
-    	  //UUID id = (UUID) UUID.fromString(request.getSession().getId());
-    	  //User user = userStore.getUser(id);
     	  User user = userStore.getUser((String) request.getSession().getAttribute("user"));
     	  Instant logout = Instant.now();
     	  Logout time = new Logout(logout, user.getName());
