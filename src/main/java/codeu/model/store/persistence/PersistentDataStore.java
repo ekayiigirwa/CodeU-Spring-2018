@@ -72,14 +72,22 @@ public List<User> loadUsers() throws PersistentDataStoreException {
         String passwordHash = (String) entity.getProperty("password_hash");
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
         User user = new User(uuid, userName, passwordHash, creationTime);
-//        user.setLoginArr((ArrayList<Login>) entity.getProperty("login"));
         
-      ArrayList<Login> login = new ArrayList<>();
-      ArrayList<String> str = (ArrayList<String>) (entity.getProperty("login"));
-      for (String i: str){
-      	login.add(new Login(Instant.parse(i), userName));
-      }
-      user.setLoginArr(login);
+	      ArrayList<Login> login = new ArrayList<>();
+	      ArrayList<String> str = (ArrayList<String>) (entity.getProperty("login"));
+	      for (String i: str){
+	      	login.add(new Login(Instant.parse(i), userName));
+	      }
+	      user.setLoginArr(login);
+	      
+	      if (entity.hasProperty("logout")){
+		      ArrayList<Logout> logout = new ArrayList<>();
+		      ArrayList<String> str2 = (ArrayList<String>) (entity.getProperty("logout"));
+		      for (String i: str2){
+		      	logout.add(new Logout(Instant.parse(i), userName));
+		      }
+		      user.setLogoutArr(logout);
+	      }
         
         users.add(user);
       } catch (Exception e) {
