@@ -14,6 +14,8 @@
 
 package codeu.controller;
 
+import codeu.model.data.Login;
+import codeu.model.data.Logout;
 import codeu.model.data.User;
 import codeu.model.store.basic.UserStore;
 import codeu.model.store.persistence.PersistentStorageAgent;
@@ -74,10 +76,11 @@ public class LogoutServlet extends HttpServlet {
       if ("Yes".equals(button)) {
     	  //UUID id = (UUID) UUID.fromString(request.getSession().getId());
     	  //User user = userStore.getUser(id);
-    	  User user = userStore.getUser((String) request.getAttribute("user"));
+    	  User user = userStore.getUser((String) request.getSession().getAttribute("user"));
     	  Instant logout = Instant.now();
-    	  request.getSession().setAttribute("logout", logout);
-    	  user.setLogoutTime(logout);
+    	  Logout time = new Logout(logout, user.getName());
+    	  user.getLogoutArr().add(time);
+    	  request.getSession().setAttribute("logout", user.getLogoutArr());
     	  userStore.updateUser(user);
     	  request.getSession().setAttribute("user", null);
     	  response.sendRedirect("/login");

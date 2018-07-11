@@ -2,6 +2,7 @@ package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
 import codeu.model.data.Login;
+import codeu.model.data.Logout;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -49,6 +50,9 @@ public class PersistentDataStoreTest {
     ArrayList<Login> loginOne = new ArrayList<Login>();
     loginOne.add(new Login(Instant.ofEpochMilli(1000), nameOne));
     inputUserOne.setLoginArr(loginOne);
+    ArrayList<Logout> logoutOne = new ArrayList<Logout>();
+    logoutOne.add(new Logout(Instant.ofEpochMilli(1000), nameOne));
+    inputUserOne.setLogoutArr(logoutOne);
 
     UUID idTwo = UUID.fromString("10000001-2222-3333-4444-555555555555");
     String nameTwo = "test_username_two";
@@ -59,6 +63,10 @@ public class PersistentDataStoreTest {
     loginTwo.add(new Login(Instant.ofEpochMilli(1000), nameTwo));
     loginTwo.add(new Login(Instant.ofEpochMilli(1000), nameTwo));
     inputUserTwo.setLoginArr(loginTwo);
+    ArrayList<Logout> logoutTwo = new ArrayList<Logout>();
+    logoutTwo.add(new Logout(Instant.ofEpochMilli(1000), nameTwo));
+    logoutTwo.add(new Logout(Instant.ofEpochMilli(1000), nameTwo));
+    inputUserTwo.setLogoutArr(logoutTwo);
 
 
     // save
@@ -81,6 +89,12 @@ public class PersistentDataStoreTest {
     	}
     }
     
+    for (int i = 0; i < logoutOne.size(); i++){
+    	if(!(logoutOne.get(i).getTime().equals(resultUserOne.getLogoutArr().get(i).getTime()))){
+    		throw new java.lang.Error("Array Not Equal");
+    	}
+    }
+    
 
     User resultUserTwo = resultUsers.get(1);
     Assert.assertEquals(idTwo, resultUserTwo.getId());
@@ -90,6 +104,12 @@ public class PersistentDataStoreTest {
     
     for (int i = 0; i < loginTwo.size(); i++){
     	if(!(loginTwo.get(i).getTime().equals(resultUserTwo.getLoginArr().get(i).getTime()))){
+    		throw new java.lang.Error("Array Not Equal");
+    	}
+    }
+    
+    for (int i = 0; i < logoutTwo.size(); i++){
+    	if(!(logoutTwo.get(i).getTime().equals(resultUserTwo.getLogoutArr().get(i).getTime()))){
     		throw new java.lang.Error("Array Not Equal");
     	}
     }
