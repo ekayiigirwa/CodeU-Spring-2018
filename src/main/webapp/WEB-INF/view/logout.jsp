@@ -44,14 +44,18 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>Logout</h1>
-      <p> Are you sure you want to log out?</p> 
-      
-    <form action="/logout" method="POST">
-      <button type="submit" name="button" value="Yes" id="Yes">Yes</button>
-      <button type="submit" name="button" value="No" id=No">No</button>
-    </form>
-      
+	<% if (request.getSession().getAttribute("user") != null) { %>
+	   <h1>Logout</h1>
+	      <p> Are you sure you want to log out?</p> 
+	      
+	    <form action="/logout" method="POST">
+	      <button type="submit" name="button" value="Yes" id="Yes">Yes</button>
+	      <button type="submit" name="button" value="No" id=No">No</button>
+	    </form>
+    <% } else { %>
+      <p><a href="/login">Login</a></p>
+    <% } %>
+    
     </div>
   </div>
 </body>
