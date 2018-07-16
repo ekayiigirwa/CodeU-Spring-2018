@@ -57,6 +57,9 @@
     <% if(request.getAttribute("error") != null){ %>
         <h2 style="color:red"><%= request.getAttribute("error") %></h2>
     <% } %>
+    
+    <% if((request.getSession().getAttribute("user") != null)){ %>
+    
  	<p>	Here's everything that's happened on the site so far!</p>
       
     <div id="activityfeed">  
@@ -131,9 +134,13 @@
 		      <%= conversation.getTitle() %></a></li>
 		      <%
       		}
-      	} 
-      %>    
-      </ul>
+      	}
+       %> </ul> <%
+     }
+     
+     else { %>
+      <p><a href="/login">Login to see everything that's happened on the site so far!</a></p>
+    <% } %>     
  
   </div>
 </body>

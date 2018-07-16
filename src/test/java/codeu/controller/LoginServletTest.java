@@ -14,9 +14,8 @@
 
 package codeu.controller;
 
-import codeu.model.data.User;
-import codeu.model.store.basic.UserStore;
 import java.io.IOException;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -25,9 +24,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import codeu.model.data.User;
+import codeu.model.store.basic.UserStore;
 
 public class LoginServletTest {
 
@@ -81,7 +84,7 @@ public class LoginServletTest {
     Mockito.when(mockRequest.getParameter("username")).thenReturn("test username");
     Mockito.when(mockRequest.getParameter("password")).thenReturn("test password");
 
-    UserStore mockUserStore = Mockito.mock(UserStore.class);
+    UserStore mockUserStore = (UserStore) Mockito.mock(UserStore.class);
     Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(true);
     Mockito.when(mockUserStore.getUser("test username")).thenReturn(user);
     loginServlet.setUserStore(mockUserStore);

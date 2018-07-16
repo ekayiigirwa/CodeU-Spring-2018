@@ -14,17 +14,21 @@
 
 package codeu.controller;
 
-import codeu.model.data.Login;
-import codeu.model.data.User;
-import java.time.Instant;
-import codeu.model.store.basic.UserStore;
 import java.io.IOException;
+import java.time.Instant;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import codeu.model.data.Login;
+import codeu.model.data.User;
+import codeu.model.store.basic.UserStore;
+
 
 /** Servlet class responsible for the login page. */
 public class LoginServlet extends HttpServlet {
@@ -84,15 +88,16 @@ public class LoginServlet extends HttpServlet {
       request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
       return;
     }
-    
-    request.getSession().setAttribute("user", username);
-    
-    Instant login = Instant.now();
-    Login time = new Login(login, user.getName());
-    user.getLoginArr().add(time);
-    request.getSession().setAttribute("login", user.getLoginArr());
-    userStore.updateUser(user);
-    
-    response.sendRedirect("/conversations");
+
+    	request.changeSessionId();
+    	request.getSession().setAttribute("user", username);
+	    
+	    Instant login = Instant.now();
+	    Login time = new Login(login, user.getName());
+	    user.getLoginArr().add(time);
+	    request.getSession().setAttribute("login", user.getLoginArr());
+	    userStore.updateUser(user);
+    	
+	    response.sendRedirect("/conversations");
   }
 }

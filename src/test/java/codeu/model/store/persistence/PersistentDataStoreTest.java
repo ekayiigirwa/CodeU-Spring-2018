@@ -102,7 +102,7 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(nameTwo, resultUserTwo.getName());
     Assert.assertEquals(passwordHashTwo, resultUserTwo.getPasswordHash());
     Assert.assertEquals(creationTwo, resultUserTwo.getCreationTime());
-    
+
     for (int i = 0; i < loginTwo.size(); i++){
     	if(!(loginTwo.get(i).getTime().equals(resultUserTwo.getLoginArr().get(i).getTime()))){
     		throw new java.lang.Error("Array Not Equal");

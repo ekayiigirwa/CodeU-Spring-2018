@@ -43,7 +43,7 @@
         <h2 style="color:red"><%= request.getAttribute("error") %></h2>
     <% } %>
 
-    <% if(request.getSession().getAttribute("user") != null){ %>
+    <% if((request.getSession().getAttribute("user") != null)){ %>
       <h1>New Conversation</h1>
       <form action="/conversations" method="POST">
           <div class="form-group">
