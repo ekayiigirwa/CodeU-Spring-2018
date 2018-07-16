@@ -195,6 +195,7 @@ public List<User> loadUsers() throws PersistentDataStoreException {
     	}
 	userEntity.setProperty("logout", logout2);
     }
+    
     datastore.put(userEntity);
   }
 

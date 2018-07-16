@@ -44,7 +44,7 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-	<% if (request.getSession().getAttribute("user") != null) { %>
+	 <% if((request.getSession().getAttribute("user") != null)){ %>
 	   <h1>Logout</h1>
 	      <p> Are you sure you want to log out?</p> 
 	      

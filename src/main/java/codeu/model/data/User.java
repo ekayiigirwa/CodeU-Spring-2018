@@ -18,6 +18,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 /** Class representing a registered user. */
 public class User extends Activity{
   private final UUID id;

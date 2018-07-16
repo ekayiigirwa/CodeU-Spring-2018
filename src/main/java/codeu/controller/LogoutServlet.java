@@ -14,31 +14,26 @@
 
 package codeu.controller;
 
-import codeu.model.data.Login;
-import codeu.model.data.Logout;
-import codeu.model.data.User;
-import codeu.model.store.basic.UserStore;
-import codeu.model.store.persistence.PersistentStorageAgent;
-
 import java.io.IOException;
 import java.time.Instant;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.mindrot.jbcrypt.BCrypt;
+import codeu.model.data.Logout;
+import codeu.model.data.User;
+import codeu.model.store.basic.UserStore;
 
-/** Servlet class responsible for the login page. */
+/** Servlet class responsible for the logout page. */
 public class LogoutServlet extends HttpServlet {
 
   /** Store class that gives access to Users. */
   private UserStore userStore;
 
   /**
-   * Set up state for handling login-related requests. This method is only called when running in a
+   * Set up state for handling logout-related requests. This method is only called when running in a
    * server, not when running in a test.
    */
   @Override
@@ -56,8 +51,8 @@ public class LogoutServlet extends HttpServlet {
   }
 
   /**
-   * This function fires when a user requests the /login URL. It simply forwards the request to
-   * login.jsp.
+   * This function fires when a user requests the /logout URL. It simply forwards the request to
+   * logout.jsp.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -79,8 +74,9 @@ public class LogoutServlet extends HttpServlet {
     	  Logout time = new Logout(logout, user.getName());
     	  user.getLogoutArr().add(time);
     	  request.getSession().setAttribute("logout", user.getLogoutArr());
-    	  userStore.updateUser(user);
+    	  request.logout();
     	  request.getSession().setAttribute("user", null);
+    	  userStore.updateUser(user);
     	  response.sendRedirect("/login");
       } 
       if ("No".equals(button)) {
