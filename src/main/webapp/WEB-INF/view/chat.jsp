@@ -16,15 +16,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
+<!--<%@ page import="codeu.model.data.User" %>-->
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
+
+UserStore userStores = (UserStore) request.getAttribute("userStores");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
+
   <title><%= conversation.getTitle() %></title>
   <link rel="stylesheet" href="/css/main.css" type="text/css">
 
@@ -37,11 +41,22 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   </style>
 
   <script>
-    // scroll the chat div to the bottom
+   
+    /*
+     * Adds text fromt the selected item on the drop-down list to the input field
+     */
+    function mention(){
+      var x = document.getElementById("currentUsers").value;
+      y = document.getElementById("chatSpace").value + "@" + x;
+      document.getElementById("chatSpace").value = y;
+      console.log(x);
+    }
+
+     // scroll the chat div to the bottom
     function scrollChat() {
       var chatDiv = document.getElementById('chat');
       chatDiv.scrollTop = chatDiv.scrollHeight;
-    };
+    }
   </script>
 </head>
 <body onload="scrollChat()">
@@ -69,11 +84,24 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <div id="chat">
       <ul>
     <%
+      String currentUserName= "@" + request.getSession().getAttribute("user");
+
       for (Message message : messages) {
-        String author = UserStore.getInstance()
-          .getUser(message.getAuthorId()).getName();
+        String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
     %>
-      <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
+      <li><strong><%= author %>:</strong> 
+
+     <%  if(message.getContent().contains(currentUserName)){ %>
+       
+          <strong><%= message.getContent() %></strong>
+       <%} else{%>
+        <%= message.getContent() %>
+      <%  
+       }
+      %>
+      
+
+      </li>
     <%
       }
     %>
@@ -84,7 +112,25 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <% if (request.getSession().getAttribute("user") != null) { %>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST">
-        <input type="text" name="message">
+        <input id = "chatSpace" type="text" name="message"> <button onclick = "this.innerHTML='test'" type="mention">mention</button>
+      
+<%
+    List<User> users =
+      (List<User>) request.getAttribute("usersInConversation");
+      %>
+        <select id = "currentUsers" onchange = "mention()">
+        <%System.out.println(users);%> <!-- For testing -->
+
+        <% for (User user: users){ %>
+        <%if(user.getName() == null){
+          continue;
+        }%>
+         <option value="<%= user.getName() %>"><%= user.getName()%></option>
+        }
+        <option value = "test">test</option>
+
+        <%}%>
+        </select>
         <br/>
         <button type="submit">Send</button>
     </form>
@@ -98,3 +144,21 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
 </body>
 </html>
+<!-- 
+ PSEUDO CODE
+
+ to get drop down list of users, ensure that you have a list of users fomr the conversation being worked on at the time.
+
+ Once you have a list of those users, use a loop and the select tag to create a list of all users in the conversation
+
+ for prototype purposes, create a dropdown with all the users in the app.
+
+ -->
+
+ <!--
+ PSEUDO CODE FOR NAME INSERT
+
+Upon clicking a user name, grab the element text and insert it into the text bar
+
+
+ -->

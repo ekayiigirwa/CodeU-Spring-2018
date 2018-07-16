@@ -63,6 +63,32 @@ public class User extends Activity{
   public Instant getCreationTime() {
     return creation;
   }
+
+
+// Allows the use of the frequency method needed for 
+//counting number of occurances
+
+@Override
+    public boolean equals(Object o)
+    {
+        User s;
+        if(!(o instanceof User))
+        {
+            return false;
+        }
+         
+        else
+        {
+            s=(User)o;
+            if(this.name.equals(s.getName()) && this.id == s.getId() ) 
+            //&& this.passwordHash == s.getPasswordHash() && this.creation = s.getCreationTime())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
   
   /** Returns the Array List of Login Times */
   public ArrayList<Login> getLoginArr() {
@@ -83,4 +109,5 @@ public class User extends Activity{
   public void setLogoutArr(ArrayList<Logout> logout) {
     this.logout = logout;
   }
+
 }

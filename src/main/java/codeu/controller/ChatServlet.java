@@ -22,7 +22,7 @@ import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.List;
+import java.util.*;
 import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -97,10 +97,27 @@ public class ChatServlet extends HttpServlet {
 
     UUID conversationId = conversation.getId();
 
-    List<Message> messages = messageStore.getMessagesInConversation(conversationId);
+    ArrayList<Message> messages = messageStore.getMessagesInConversation(conversationId);
+
+    //ArrayList<User> users = userStore.getAllUsers();
+    ArrayList<User> usersInConversation = messageStore.getUsersInConversation(messages);
+
+    /**
+      *Pseudo for finding users in messages list
+      *Create function that accepts a list of messages as input
+      * it loops through each message and gets the message's author using the 
+      *get Author function already written
+      * once a unique user is found it is put into a list of unique users appearing in that convesation
+      * based on the authors found in the messages
+      * at the end, the funtion returns the list of unique users found
+      */
+
+
+
 
     request.setAttribute("conversation", conversation);
     request.setAttribute("messages", messages);
+    request.setAttribute("usersInConversation", usersInConversation);
     request.getRequestDispatcher("/WEB-INF/view/chat.jsp").forward(request, response);
   }
 

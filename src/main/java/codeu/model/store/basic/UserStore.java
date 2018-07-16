@@ -19,6 +19,12 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.time.Instant;
+
+
+import codeu.model.data.Conversation;
+import codeu.model.store.basic.ConversationStore;
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -58,11 +64,15 @@ public class UserStore {
   /** The in-memory list of Users. */
   private List<User> users;
 
+
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<>();
   }
+
+/*
+ 
 
   /**
    * Access the User object with the given name.
@@ -126,5 +136,55 @@ public class UserStore {
   public void setUsers(List<User> users) {
     this.users = users;
   }
+
+
+  /** Returns number of users */
+public int count(){
+  return users.size();
 }
+
+/** Returns most recently created user */
+public String getNewestUser(){
+    User currentUser;
+    User newUser = null;
+    /**used to store creation times */
+    Instant currentTime;
+    Instant newUserTime = null;
+
+    int i;
+
+  for(i = 0; i < users.size();i++){
+    currentUser = users.get(i);
+    currentTime = currentUser.getCreationTime();
+
+      /** tests for newUser and newUserTime initiation on first iteration */
+    if(newUserTime == null){
+      newUser = currentUser;
+      newUserTime = currentTime;
+
+       continue;
+    }
+    /**
+     * compares current time to the newest user time 
+     * use compareTo() because normal condititonal operators do not work on the Instant object
+     */
+    if(currentTime.compareTo(newUserTime) >= 0){ 
+      newUserTime = currentTime;
+      newUser = currentUser;
+    }  
+  }
+  return newUser.getName();
+}
+
+public ArrayList<User> getAllUsers(){
+  ArrayList<User> listOfUsers = new ArrayList<User>();
+
+  for(User user: users){
+    listOfUsers.add(user);
+  }
+  return listOfUsers;
+}
+
+}
+
 

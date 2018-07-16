@@ -80,7 +80,7 @@ public class ChatServletTest {
     Mockito.when(mockConversationStore.getConversationWithTitle("test_conversation"))
         .thenReturn(fakeConversation);
 
-    List<Message> fakeMessageList = new ArrayList<>();
+    ArrayList<Message> fakeMessageList = new ArrayList<>();
     fakeMessageList.add(
         new Message(
             UUID.randomUUID(),
