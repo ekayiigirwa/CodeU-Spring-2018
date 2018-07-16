@@ -15,10 +15,15 @@
 package codeu.controller;
 
 import codeu.model.data.Login;
+import codeu.model.data.Logout;
 import codeu.model.data.User;
-import java.time.Instant;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.persistence.PersistentStorageAgent;
+
 import java.io.IOException;
+import java.time.Instant;
+import java.util.UUID;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 
 /** Servlet class responsible for the login page. */
-public class LoginServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
   /** Store class that gives access to Users. */
   private UserStore userStore;
@@ -57,42 +62,29 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/view/logout.jsp").forward(request, response);
   }
 
   /**
-   * This function fires when a user submits the login form. It gets the username and password from
-   * the submitted form data, checks for validity and if correct adds the username to the session so
-   * we know the user is logged in.
+   * This function fires when a user submits the logout form.
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-
-    if (!userStore.isUserRegistered(username)) {
-      request.setAttribute("error", "That username was not found.");
-      request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
-      return;
-    }
-
-    User user = (User) userStore.getUser(username);
-
-    if (!BCrypt.checkpw(password, user.getPasswordHash())) {
-      request.setAttribute("error", "Please enter a correct password.");
-      request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
-      return;
-    }
-    
-    request.getSession().setAttribute("user", username);
-    
-    Instant login = Instant.now();
-    Login time = new Login(login, user.getName());
-    user.getLoginArr().add(time);
-    request.getSession().setAttribute("login", user.getLoginArr());
-    userStore.updateUser(user);
-    
-    response.sendRedirect("/conversations");
+	  String button = request.getParameter("button");
+	  
+      if ("Yes".equals(button)) {
+    	  User user = userStore.getUser((String) request.getSession().getAttribute("user"));
+    	  Instant logout = Instant.now();
+    	  Logout time = new Logout(logout, user.getName());
+    	  user.getLogoutArr().add(time);
+    	  request.getSession().setAttribute("logout", user.getLogoutArr());
+    	  userStore.updateUser(user);
+    	  request.getSession().setAttribute("user", null);
+    	  response.sendRedirect("/login");
+      } 
+      if ("No".equals(button)) {
+    	  response.sendRedirect("/activityfeed");
+      } 
   }
 }

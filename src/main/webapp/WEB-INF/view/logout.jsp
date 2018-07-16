@@ -16,42 +16,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register</title>
+  <title>Logout</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-  <nav>
+<nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null) { %>
+    <% if(request.getSession().getAttribute("user") != null){ %>
       <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else { %>
+    <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
     <a href="/activityfeed">Activity Feed</a>
     <a href="/logout">Logout</a>
   </nav>
+  
 
-  <div id="container">
-    <h1>Register</h1>
+<div id="container">
 
-    <% if(request.getAttribute("error") != null){ %>
+   <% if(request.getAttribute("error") != null){ %>
         <h2 style="color:red"><%= request.getAttribute("error") %></h2>
     <% } %>
+    
+    <div
+      style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-    <form action="/register" method="POST">
-      <label for="username">Username: </label>
-      <br/>
-      <input type="text" name="username" id="username">
-      <br/>
-      <label for="password">Password: </label>
-      <br/>
-      <input type="password" name="password" id="password">
-      <br/><br/>
-      <button type="submit">Submit</button>
-    </form>
+	<% if (request.getSession().getAttribute("user") != null) { %>
+	   <h1>Logout</h1>
+	      <p> Are you sure you want to log out?</p> 
+	      
+	    <form action="/logout" method="POST">
+	      <button type="submit" name="button" value="Yes" id="Yes">Yes</button>
+	      <button type="submit" name="button" value="No" id=No">No</button>
+	    </form>
+    <% } else { %>
+      <p><a href="/login">Login</a></p>
+    <% } %>
+    
+    </div>
   </div>
 </body>
 </html>
