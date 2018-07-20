@@ -13,6 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
+
+<%@ page import ="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.data.Message" %>
+<%@ page import="codeu.model.store.basic.UserStore" %>
+
+<% String bio = (String) request.getAttribute("UserInfo"); %> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,26 +43,27 @@ limitations under the License.
 </nav>
 
 <div id="container">
-  <h1> <%= request.getSession().getAttribute("user") %>'s Profile</h1>
-
-  <% if(request.getAttribute("error") != null){ %>
-      <h2 style="color:red"><%= request.getAttribute("error") %></h2>
-
-  <%-- checks if user is logged in--%>
-  <% } if (request.getSession().getAttribute("user") == null ) {%>
-    <a href="/login">Login</a> 
+    <% if(request.getAttribute("error") != null){ %>
+      <h2 style="color:red"> <%= request.getAttribute("error") %></h2>
+    <% } %>
     
-  <% } else { %>
+    <% String currentUser = (String) request.getSession().getAttribute("user"); %>
+    <% String userName= UserStore.getInstance().getUser(currentUser).getName(); %>
+    <h1> <%= request.getSession().getAttribute("user") %>'s Profile</h1>
+  
+    <div id = "profile_info">
+
+      <form action="/profile" method="POST">
+
+        <label for="AboutMe"> Edit your profile here: </label>
+        <input type="text" name = "AboutMe">
+        <br/>
     
-    <form action="/profile" method="POST">
-      <label for="AboutMe"> Edit your profile here: </label>
-      <input type="text" name = "AboutMe">
-      <br/><br/>
-  
-      <button type = "submit"> Edit </button>
-    </form> 
-  <% } %>
-  
+        <button type = "submit"> Edit </button>
+      </form> 
+      <strong>Bio: </strong> <%= bio %>
+
+    </div> 
 </div>
 </body>
 </html>
