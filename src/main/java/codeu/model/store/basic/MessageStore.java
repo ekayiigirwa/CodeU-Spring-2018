@@ -16,9 +16,11 @@ package codeu.model.store.basic;
 
 import codeu.model.data.Message;
 import codeu.model.store.persistence.PersistentStorageAgent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
+import codeu.model.data.User;
+import codeu.model.store.basic.UserStore;
+import java.util.*;
+
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -26,7 +28,7 @@ import java.util.UUID;
  * instance.
  */
 public class MessageStore {
-
+UserStore userStore = UserStore.getInstance();
   /** Singleton instance of MessageStore. */
   private static MessageStore instance;
 
@@ -59,6 +61,7 @@ public class MessageStore {
   /** The in-memory list of Messages. */
   private List<Message> messages;
 
+
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private MessageStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
@@ -72,9 +75,9 @@ public class MessageStore {
   }
 
   /** Access the current set of Messages within the given Conversation. */
-  public List<Message> getMessagesInConversation(UUID conversationId) {
+  public ArrayList<Message> getMessagesInConversation(UUID conversationId) {
 
-    List<Message> messagesInConversation = new ArrayList<>();
+    ArrayList<Message> messagesInConversation = new ArrayList<>();
 
     for (Message message : messages) {
       if (message.getConversationId().equals(conversationId)) {
@@ -89,4 +92,108 @@ public class MessageStore {
   public void setMessages(List<Message> messages) {
     this.messages = messages;
   }
+
+
+  /** Returns number of messages */
+  public int count(){
+  return messages.size();
+  }
+
+ /** given a particular message, returns the user that authored the message */
+  public User getUserFromMsg(Message msg){
+       //currentMsg = messages.get(i);
+    User currentUser = null;
+    UUID currentId = new UUID(0L, 0L);
+
+    currentId = msg.getAuthorId();
+    currentUser = userStore.getUser(currentId);
+    return currentUser;
+  }
+
+/**
+  * returns a list of users who created messages. users are repeated in  the list accordance
+  * with the number of messages they sent
+  */
+public ArrayList<User> getUsersPlusMsgs(){
+  ArrayList<User> usersWithMessages = new ArrayList<User>();
+    // get list of users who created messages and the amount of times they did so
+    User user = null;
+    for (Message message : messages) {   
+        //userNameId = message.getAuthorId();
+        user = getUserFromMsg(message);
+        usersWithMessages.add(user);
+    }
+
+    return usersWithMessages;
+}
+
+/**
+  *accepts an array with the lsit of all messages in a conversation
+  * returns a list of users in the conversation's messages
+  */
+
+public ArrayList<User> getUsersInConversation(ArrayList<Message> messageList){
+
+  ArrayList<User> usersInConversation = new ArrayList<User>();
+  
+    User user = null;
+    for (Message message : messageList) { 
+
+        user = getUserFromMsg(message);
+  
+      if(usersInConversation.contains(user)){
+        continue;
+      }else{
+         usersInConversation.add(user);
+      }
+    }
+
+    return usersInConversation;
+}
+
+
+
+/** Returns wordiest user based on amount of messages sent */
+  public String wordyUser(){
+
+  UserStore userStore = UserStore.getInstance();
+
+    User currentUser = null;
+    User tempUser = null;  
+
+    String wordiestUser = null;
+
+    int i;
+    int tempCount = 0;
+    int maxCount = 0;
+
+    ArrayList<User> usersWithMessages = this.getUsersPlusMsgs();
+
+    /** Stores users that run through for loop */
+    ArrayList<User> userCheckList = new ArrayList<User>();
+
+    for(i = 0; i < messages.size();i++){
+
+    currentUser = getUserFromMsg(messages.get(i));
+
+    /** Tests to ensure that current user is not the same as any previous users */
+       if(userCheckList.contains(currentUser)){
+        continue;
+      }else{
+         userCheckList.add(currentUser);
+      }
+    tempUser = currentUser;
+
+    /** Find number of occurances for currentUser */
+    tempCount = Collections.frequency(usersWithMessages, currentUser);
+    
+      /** Initialize maxCount and keep track of the user with the highest count of messages */
+      if(tempCount > maxCount){
+            maxCount = tempCount;
+            wordiestUser = currentUser.getName();
+          }
+      }
+    return wordiestUser;
+}
+
 }

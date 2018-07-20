@@ -1,6 +1,8 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Conversation;
+import codeu.model.store.basic.UserStore;
+
 import codeu.model.store.persistence.PersistentStorageAgent;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -72,6 +74,27 @@ public class ConversationStoreTest {
     Mockito.verify(mockPersistentStorageAgent).writeThrough(inputConversation);
   }
 
+/** Custom Guided Project tests */
+    @Test
+    public void testCount(){
+
+    int testListSize = conversationStore.count();
+    Assert.assertEquals(1,testListSize);
+  }
+
+    @Test
+    public void testCount_empty(){
+    List<Conversation> testList = new ArrayList<Conversation>();
+    conversationStore.setConversations(testList);
+
+    Assert.assertTrue(testList.isEmpty());
+  }
+
+  @Test
+  public void testGetUserFromCon(){
+    Mockito.mock(UserStore.class);
+    UUID mockId = UUID.randomUUID();
+  }
   private void assertEquals(Conversation expectedConversation, Conversation actualConversation) {
     Assert.assertEquals(expectedConversation.getId(), actualConversation.getId());
     Assert.assertEquals(expectedConversation.getOwnerId(), actualConversation.getOwnerId());

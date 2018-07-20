@@ -15,15 +15,21 @@
 package codeu.model.data;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 /** Class representing a registered user. */
-public class User {
+public class User extends Activity{
   private final UUID id;
   private final String name;
   private final String passwordHash;
   private final Instant creation;
   String bio;
+  public ArrayList<Login> login = new ArrayList<Login>();
+  public ArrayList<Logout> logout= new ArrayList<Logout>();
+
   /**
    * Constructs a new User.
    *
@@ -31,13 +37,14 @@ public class User {
    * @param name the username of this User
    * @param passwordHash the password hash of this User
    * @param creation the creation time of this User
+   * @param login the login time of this User
+   * @param logout the logout time of this User
    */
-  public User(UUID id, String name, String passwordHash, Instant creation, String bioIn) {
+  public User(UUID id, String name, String passwordHash, Instant creation) {
     this.id = id;
     this.name = name;
     this.passwordHash = passwordHash;
     this.creation = creation;
-    this.bio = bioIn;
   }
 
   /** Returns the ID of this User. */
@@ -71,6 +78,51 @@ public class User {
   public String getBio() {
     return this.bio;
   
+  }
+
+  // Allows the use of the frequency method needed for 
+//counting number of occurances
+
+@Override
+    public boolean equals(Object o)
+    {
+        User s;
+        if(!(o instanceof User))
+        {
+            return false;
+        }
+         
+        else
+        {
+            s = (User) o;
+            if(this.name.equals(s.getName()) && this.id == s.getId() ) 
+            //&& this.passwordHash == s.getPasswordHash() && this.creation = s.getCreationTime())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+  
+  /** Returns the Array List of Login Times */
+  public ArrayList<Login> getLoginArr() {
+    return login;
+  }
+  
+  /** Sets the Array List of Login Times */
+  public void setLoginArr(ArrayList<Login> login) {
+    this.login = login;
+  }
+  
+  /** Returns the Array List of Login Times */
+  public ArrayList<Logout> getLogoutArr() {
+    return logout;
+  }
+  
+  /** Sets the Array List of Login Times */
+  public void setLogoutArr(ArrayList<Logout> logout) {
+    this.logout = logout;
   }
   
 }

@@ -1,17 +1,21 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Login;
+import codeu.model.data.Logout;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * Test class for PersistentDataStore. The PersistentDataStore class relies on DatastoreService,
@@ -43,12 +47,28 @@ public class PersistentDataStoreTest {
     String passwordHashOne = "$2a$10$BNte6sC.qoL4AVjO3Rk8ouY6uFaMnsW8B9NjtHWaDNe8GlQRPRT1S";
     Instant creationOne = Instant.ofEpochMilli(1000);
     User inputUserOne = new User(idOne, nameOne, passwordHashOne, creationOne);
+    ArrayList<Login> loginOne = new ArrayList<Login>();
+    loginOne.add(new Login(Instant.ofEpochMilli(1000), nameOne));
+    inputUserOne.setLoginArr(loginOne);
+    ArrayList<Logout> logoutOne = new ArrayList<Logout>();
+    logoutOne.add(new Logout(Instant.ofEpochMilli(1000), nameOne));
+    logoutOne.add(new Logout(Instant.ofEpochMilli(1000), nameOne));
+    inputUserOne.setLogoutArr(logoutOne);
 
     UUID idTwo = UUID.fromString("10000001-2222-3333-4444-555555555555");
     String nameTwo = "test_username_two";
     String passwordHashTwo = "$2a$10$ttaMOMMGLKxBBuTN06VPvu.jVKif.IczxZcXfLcqEcFi1lq.sLb6i";
     Instant creationTwo = Instant.ofEpochMilli(2000);
     User inputUserTwo = new User(idTwo, nameTwo, passwordHashTwo, creationTwo);
+    ArrayList<Login> loginTwo = new ArrayList<Login>();
+    loginTwo.add(new Login(Instant.ofEpochMilli(1000), nameTwo));
+    loginTwo.add(new Login(Instant.ofEpochMilli(1000), nameTwo));
+    inputUserTwo.setLoginArr(loginTwo);
+    ArrayList<Logout> logoutTwo = new ArrayList<Logout>();
+    logoutTwo.add(new Logout(Instant.ofEpochMilli(1000), nameTwo));
+    logoutTwo.add(new Logout(Instant.ofEpochMilli(1000), nameTwo));
+    inputUserTwo.setLogoutArr(logoutTwo);
+
 
     // save
     persistentDataStore.writeThrough(inputUserOne);
@@ -63,12 +83,37 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(nameOne, resultUserOne.getName());
     Assert.assertEquals(passwordHashOne, resultUserOne.getPasswordHash());
     Assert.assertEquals(creationOne, resultUserOne.getCreationTime());
+    
+    for (int i = 0; i < loginOne.size(); i++){
+    	if(!(loginOne.get(i).getTime().equals(resultUserOne.getLoginArr().get(i).getTime()))){
+    		throw new java.lang.Error("Array Not Equal");
+    	}
+    }
+    
+    for (int i = 0; i < logoutOne.size(); i++){
+    	if(!(logoutOne.get(i).getTime().equals(resultUserOne.getLogoutArr().get(i).getTime()))){
+    		throw new java.lang.Error("Array Not Equal");
+    	}
+    }
+    
 
     User resultUserTwo = resultUsers.get(1);
     Assert.assertEquals(idTwo, resultUserTwo.getId());
     Assert.assertEquals(nameTwo, resultUserTwo.getName());
     Assert.assertEquals(passwordHashTwo, resultUserTwo.getPasswordHash());
     Assert.assertEquals(creationTwo, resultUserTwo.getCreationTime());
+
+    for (int i = 0; i < loginTwo.size(); i++){
+    	if(!(loginTwo.get(i).getTime().equals(resultUserTwo.getLoginArr().get(i).getTime()))){
+    		throw new java.lang.Error("Array Not Equal");
+    	}
+    }
+    
+    for (int i = 0; i < logoutTwo.size(); i++){
+    	if(!(logoutTwo.get(i).getTime().equals(resultUserTwo.getLogoutArr().get(i).getTime()))){
+    		throw new java.lang.Error("Array Not Equal");
+    	}
+    }
   }
 
   @Test

@@ -1,6 +1,7 @@
 package codeu.controller;
 
 import java.io.IOException;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -63,9 +64,8 @@ public class RegisterServlet extends HttpServlet {
 
     String password = request.getParameter("password");
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-    String defaultBio = "Hi there! I'm "+ username;
 
-    User user = new User(UUID.randomUUID(), username, hashedPassword, Instant.now(), defaultBio);
+    User user = new User(UUID.randomUUID(), username, hashedPassword, Instant.now());
     userStore.addUser(user);
 
     response.sendRedirect("/login");
