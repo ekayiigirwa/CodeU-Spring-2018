@@ -71,9 +71,10 @@ public List<User> loadUsers() throws PersistentDataStoreException {
         String userName = (String) entity.getProperty("username");
         String passwordHash = (String) entity.getProperty("password_hash");
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+        String bio = (String) entity.getProperty("bio");
         User user = new User(uuid, userName, passwordHash, creationTime);
         
-	      ArrayList<Login> login = new ArrayList<>();
+        ArrayList<Login> login = new ArrayList<>();
 	      ArrayList<String> str = (ArrayList<String>) (entity.getProperty("login"));
 	      for (String i: str){
 	      	login.add(new Login(Instant.parse(i), userName));
@@ -90,6 +91,7 @@ public List<User> loadUsers() throws PersistentDataStoreException {
 	      }
         
         users.add(user);
+
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
         // occur include network errors, Datastore service errors, authorization errors,
@@ -177,25 +179,24 @@ public List<User> loadUsers() throws PersistentDataStoreException {
     userEntity.setProperty("username", user.getName());
     userEntity.setProperty("password_hash", user.getPasswordHash());
     userEntity.setProperty("creation_time", user.getCreationTime().toString());
-    
+    userEntity.setProperty("bio", user.getBio());
     if(!user.getLoginArr().isEmpty()){
     	ArrayList<Login> login = user.getLoginArr();
     	ArrayList<String> login2 = new ArrayList<String>();
     	for(Login in: login){
     		login2.add(in.getTime().toString());
     	}
-	userEntity.setProperty("login", login2);
-    }
-    
-    if(!user.getLogoutArr().isEmpty()){
-    	ArrayList<Logout> logout = user.getLogoutArr();
-    	ArrayList<String> logout2 = new ArrayList<String>();
-    	for(Logout in: logout){
-    		logout2.add(in.getTime().toString());
-    	}
-	userEntity.setProperty("logout", logout2);
-    }
-    
+    userEntity.setProperty("login", login2);
+      }
+      
+      if(!user.getLogoutArr().isEmpty()){
+        ArrayList<Logout> logout = user.getLogoutArr();
+        ArrayList<String> logout2 = new ArrayList<String>();
+        for(Logout in: logout){
+          logout2.add(in.getTime().toString());
+        }
+    userEntity.setProperty("logout", logout2);
+      }
     datastore.put(userEntity);
   }
 

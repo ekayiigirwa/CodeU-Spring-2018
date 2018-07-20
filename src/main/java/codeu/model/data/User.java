@@ -26,6 +26,7 @@ public class User extends Activity{
   private final String name;
   private final String passwordHash;
   private final Instant creation;
+  String bio;
   public ArrayList<Login> login = new ArrayList<Login>();
   public ArrayList<Logout> logout= new ArrayList<Logout>();
 
@@ -66,8 +67,20 @@ public class User extends Activity{
     return creation;
   }
 
+  /** Returns the bio of this User. */
+  public void setBio(String bioNew) {
+    this.bio = bioNew; 
+    //System.out.println("bio info from User class" + this.bio);  
 
-// Allows the use of the frequency method needed for 
+  }
+
+/** Returns the bio of this User. */
+  public String getBio() {
+    return this.bio;
+  
+  }
+
+  // Allows the use of the frequency method needed for 
 //counting number of occurances
 
 @Override
@@ -81,7 +94,7 @@ public class User extends Activity{
          
         else
         {
-            s=(User)o;
+            s = (User) o;
             if(this.name.equals(s.getName()) && this.id == s.getId() ) 
             //&& this.passwordHash == s.getPasswordHash() && this.creation = s.getCreationTime())
             {
@@ -111,5 +124,5 @@ public class User extends Activity{
   public void setLogoutArr(ArrayList<Logout> logout) {
     this.logout = logout;
   }
-
+  
 }

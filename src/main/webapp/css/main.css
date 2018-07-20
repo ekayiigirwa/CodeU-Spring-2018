@@ -20,7 +20,7 @@ body {
   font-size: 18px;
   line-height: 1.6;
   color: #444;
-  background-color: #eeeeee;
+  background-color: solid powderblue;
 }
 
 nav {
@@ -55,4 +55,7 @@ input {
 
 button {
   font-size: 18px;
+}
+h3 {
+  color: green;
 }

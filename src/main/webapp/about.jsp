@@ -64,8 +64,22 @@
         working with your team to plan and make changes. Start by updating the
         homepage and this about page to tell your users more about your team.
         This page should also be used to describe the features and improvements
-        you've added.
+        you've added. Hooray!!
       </p>
+      <h2> About the Developpers:</h2>
+      <h3>THE BAGHEERA-BAND-33 TEAM </h3>
+        <img src= "C:\Users\eduigekayigirwa\Downloads\'bagheera saves'.gif"
+        alt = "Bagheera saving." >
+      <p>
+        This chat app is the product of team Bagheera-Band-33. 
+        <ul> 
+          <li> <strong> Eduige Kayigirwa: </strong> Will work on profile pages.</li>
+          <li> <strong> Stephen Seymour: </strong> Will develop the the Admin Page. </li>
+          <li> <strong> Liana Najaroen: </strong> Will work on the activity feed. </li>
+          <li> <strong> Fatema Uddin: </strong> Will work on making it possible to change the styles of texts on the page </li>
+        </ul>  
+      </p>
+
     </div>
   </div>
 </body>
