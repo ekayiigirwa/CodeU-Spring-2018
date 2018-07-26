@@ -72,7 +72,8 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
   <% } %>
   <a href="/about.jsp">About</a>
   <a href="/activityfeed">Activity Feed</a>
-  <a href="/logout">Logout</a>
+  <% if((request.getSession().getAttribute("user") != null)){ %>
+    	<a href="/logout">Logout</a> <% } %>
 </nav>
 
 <div id="container">
