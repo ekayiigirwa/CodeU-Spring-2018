@@ -157,9 +157,7 @@ public class ChatServlet extends HttpServlet {
 
     String messageContent = request.getParameter("message");
     String emoji = request.getParameter("emoticon");
-    //String emojiToISO88591 = new String(emoji.getBytes("UTF-8"), "ISO-8859-1");
-
-    // this removes any HTML from the message content
+    
     String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
 
     Message message =
@@ -176,7 +174,7 @@ public class ChatServlet extends HttpServlet {
               UUID.randomUUID(),
               conversation.getId(),
               user.getId(),
-              emoji,
+              cleanedMessageContent + " "+ emoji,
               Instant.now());
       messageStore.addMessage(reaction);
     }
