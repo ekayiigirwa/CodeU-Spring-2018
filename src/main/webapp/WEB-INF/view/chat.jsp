@@ -119,17 +119,17 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         <%}%>
         </select>
         <br/>
-        <button type="submit">Send</button>
-        <br/>
-        <input type="text" name="message">
-        <button type="submit">Send</button>
-        <br/>
-      <input type = "submit" name="emoticon" value= &#x1F601;>
-      <input type = "submit" name="emoticon" value= &#x1F60D;>
-      <input type = "submit" name="emoticon" value= &#x1F44D;>
-      <input type = "submit" name="emoticon" value= &#x1F44E;>
-      <input type = "submit" name="emoticon" value= &#x1F914;>
-      <br/><br/>
+        
+
+          <input type="text" name="message">
+          <button type="submit">Send Text</button>
+          <br/>
+        <input type = "submit" name="emoticon" value= &#x1F601;>
+        <input type = "submit" name="emoticon" value= &#x1F60D;>
+        <input type = "submit" name="emoticon" value= &#x1F44D;>
+        <input type = "submit" name="emoticon" value= &#x1F44E;>
+        <input type = "submit" name="emoticon" value= &#x1F914;>
+        <br/><br/>
   </form>
   <% } else { %>
     <p><a href="/login">Login</a> to send a message.</p>
