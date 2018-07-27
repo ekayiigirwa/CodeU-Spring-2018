@@ -62,7 +62,6 @@ public class ProfileServlet1 extends HttpServlet {
         userStore.updateUser(myUser);
         // gets the profile edits
         String profileUpdate = request.getParameter("AboutMe");
-        request.getSession().setAttribute("UserInfo", bio);
         response.sendRedirect("/profile");
         
     
