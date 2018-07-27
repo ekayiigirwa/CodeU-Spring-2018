@@ -73,6 +73,7 @@ public List<User> loadUsers() throws PersistentDataStoreException {
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
         String bio = (String) entity.getProperty("bio");
         User user = new User(uuid, userName, passwordHash, creationTime);
+        user.setBio(bio);
         
         ArrayList<Login> login = new ArrayList<>();
 	      ArrayList<String> str = (ArrayList<String>) (entity.getProperty("login"));
