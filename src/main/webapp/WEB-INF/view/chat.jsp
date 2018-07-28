@@ -119,11 +119,6 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         <%}%>
         </select>
         <br/>
-        
-
-          <input type="text" name="message">
-          <button type="submit">Send Text</button>
-          <br/>
         <input type = "submit" name="emoticon" value= &#x1F601;>
         <input type = "submit" name="emoticon" value= &#x1F60D;>
         <input type = "submit" name="emoticon" value= &#x1F44D;>
