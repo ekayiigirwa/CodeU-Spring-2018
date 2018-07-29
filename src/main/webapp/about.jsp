@@ -16,16 +16,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CodeU Chat App</title>
+  <title>Bagheera-Band-33</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
   <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
+    <a id="navTitle" href="/">Bagheera Band 33</a>
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+      <a href="/profile"> Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
@@ -40,8 +40,7 @@
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
       <h1> About the Developers:</h1>
       <h2>THE BAGHEERA-BAND-33 TEAM </h2>
-        <img src= "C:\Users\eduigekayigirwa\Downloads\'bagheera saves'.gif"
-        alt = "Bagheera saving." >
+        <img src= "images/bagheeraSaves.gif" height = "250" width = "500"  alt = "Bagheera saving." >
       <p>
         This chat app is the product of team Bagheera-Band-33. 
         <ul> 

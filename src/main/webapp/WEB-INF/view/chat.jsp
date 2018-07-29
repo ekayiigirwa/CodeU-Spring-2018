@@ -63,7 +63,7 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 <body onload="scrollChat()">
 
 <nav>
-  <a id="navTitle" href="/">CodeU Chat App</a>
+  <a id="navTitle" href="/">Bagheera Band 33</a>
   <a href="/conversations">Conversations</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
   <a href = "/profile" > Hello <%= request.getSession().getAttribute("user") %> ! </a>
@@ -119,6 +119,8 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         <%}%>
         </select>
         <br/>
+        <button type="submit">Send text</button>
+       
         <input type = "submit" name="emoticon" value= &#x1F601;>
         <input type = "submit" name="emoticon" value= &#x1F60D;>
         <input type = "submit" name="emoticon" value= &#x1F44D;>

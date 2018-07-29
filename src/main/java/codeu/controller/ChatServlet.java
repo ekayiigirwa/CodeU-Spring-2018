@@ -156,11 +156,12 @@ public class ChatServlet extends HttpServlet {
     }
 
     String messageContent = request.getParameter("message");
-    String emoji = request.getParameter("emoticon");
+    String emoticon = request.getParameter("emoticon");
     
     String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
 
-    Message message =
+    
+   Message message =
         new Message(
             UUID.randomUUID(),
             conversation.getId(),
@@ -168,19 +169,19 @@ public class ChatServlet extends HttpServlet {
             cleanedMessageContent,
             Instant.now());
 
-    if (emoji != null) {    
-      Message reaction =
-          new Message(
-              UUID.randomUUID(),
-              conversation.getId(),
-              user.getId(),
-              cleanedMessageContent + " "+ emoji,
-              Instant.now());
+    if (request.getParameter("emoticon")!= null) {
+        Message reaction = 
+              new Message(
+                UUID.randomUUID(),
+                  conversation.getId(),
+                  user.getId(),
+                  cleanedMessageContent + " "+ emoticon,
+                  Instant.now());
       messageStore.addMessage(reaction);
     }
-    else {
+    else {  
       messageStore.addMessage(message);
-    }
+    }  
   
     //response.getOutputStream().println(emojiToISO88591);
     // redirect to a GET request
