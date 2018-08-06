@@ -45,11 +45,15 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
     /*
      * Adds text fromt the selected item on the drop-down list to the input field
      */
+
+     var isMentioned = false;
     function mention(){
       var x = document.getElementById("currentUsers").value;
-      y = document.getElementById("chatSpace").value + "@" + x;
+      var y = document.getElementById("chatSpace").value + "@" + x;
       document.getElementById("chatSpace").value = y;
       console.log(x);
+
+      isMentioned = true;
     }
 
      // scroll the chat div to the bottom
@@ -91,13 +95,12 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 
      <%  if(message.getContent().contains(currentUserName)){ %>
        
-          <strong><%= message.getContent() %></strong>
-       <%} else{%>
-        <%= message.getContent() %>
+          <mark><strong><%= message.getContent() %><strong></mark>
+       <%} else{ %>
+        <span style = "font-weight:normal"><%= message.getContent() %></span>
       <%  
        }
       %>
-      
 
       </li>
     <%
@@ -110,7 +113,8 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 
     <% if (request.getSession().getAttribute("user") != null) { %>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST">
-        <input id = "chatSpace" type="text" name="message"> <button onclick = "this.innerHTML='test'" type="mention">mention</button>
+        <input id = "chatSpace" type="text" name="message"> 
+
       
 <%
     List<User> users =
@@ -118,6 +122,9 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
       %>
         <select id = "currentUsers" onchange = "mention()">
         <%System.out.println(users);%> <!-- For testing -->
+        
+        <option value = "" disabled selected hidden>Conversation Members</option>
+
 
         <% for (User user: users){ %>
         <%if(user.getName() == null){
@@ -125,9 +132,9 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         }%>
          <option value="<%= user.getName() %>"><%= user.getName()%></option>
         }
-        <option value = "test">test</option>
-
+  
         <%}%>
+
         </select>
         <br/>
         <button type="submit">Send</button>
@@ -139,24 +146,22 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
     <hr/>
 
   </div>
+    <li>
+      <ul>
+        
 
+      </ul>
+    </li>
+
+    <!--- testing purposes only -->
+    <div>
+        <%
+        for (Message message : messages) {
+        
+        System.out.println(message);
+        }
+    %>
+        
+    </div>
 </body>
 </html>
-<!-- 
- PSEUDO CODE
-
- to get drop down list of users, ensure that you have a list of users fomr the conversation being worked on at the time.
-
- Once you have a list of those users, use a loop and the select tag to create a list of all users in the conversation
-
- for prototype purposes, create a dropdown with all the users in the app.
-
- -->
-
- <!--
- PSEUDO CODE FOR NAME INSERT
-
-Upon clicking a user name, grab the element text and insert it into the text bar
-
-
- -->
