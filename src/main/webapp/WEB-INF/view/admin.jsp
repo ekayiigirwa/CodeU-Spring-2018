@@ -21,20 +21,9 @@
   </nav>
 
   <div id="container">
-    <h1>Admin</h1>
 
-    <% if(request.getAttribute("error") != null){ %>
-        <h2 style="color:red"><%= request.getAttribute("error") %></h2>
-    <% } %>
-    
-    <h2>Welcome to the Admin Page</h2>
-    <p>Authorized admins:</p>
-    <!-- dummy prototype data -->
-    <ul>
-        <li>Eduige</li>
-        <li>Liana</li>
-        <li>Stephen</li>
-    </ul>
+    <h2>Welcome to the Administration Page</h2>
+  
 
   <h1>Statistics</h1>
   <ul>
@@ -46,7 +35,6 @@
       <li>Wordiest User: <%=request.getAttribute("wordiestUser")%> </li>
 
   </ul>
-
  
    
   </div>

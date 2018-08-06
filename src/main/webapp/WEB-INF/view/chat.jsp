@@ -46,9 +46,10 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
   /*
      * Adds text fromt the selected item on the drop-down list to the input field
      */
+
      function mention(){
       var x = document.getElementById("currentUsers").value;
-      y = document.getElementById("chatSpace").value + "@" + x;
+      var y = document.getElementById("chatSpace").value + "@" + x;
       document.getElementById("chatSpace").value = y;
       console.log(x);
     }
@@ -83,17 +84,24 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 
   <hr/>
 
-  <div id="chat">
-    <ul>
-  <%
-    for (Message message : messages) {
-      String author = UserStore.getInstance()
-        .getUser(message.getAuthorId()).getName();
-  %>
-    <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
-  <%
-    }
-  %>
+ <div id="chat">
+      <ul>
+    <%
+      String currentUserName= "@" + request.getSession().getAttribute("user");
+
+      for (Message message : messages) {
+        String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
+    %>
+      <li><strong><%= author %>:</strong> 
+
+     <%  if(message.getContent().contains(currentUserName)){ %>
+       
+          <mark><strong><%= message.getContent() %><strong></mark>
+       <%} else{ %>
+        <span style = "font-weight:normal"><%= message.getContent() %></span>
+      <%  
+       }
+      %>
     </ul>
   </div>
 
@@ -102,11 +110,18 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
   <% if (request.getSession().getAttribute("user") != null) { %>
   <form action="/chat/<%= conversation.getTitle() %>" method="post">
 
-      <input id = "chatSpace" type="text" name="message"> <button onclick = "this.innerHTML='test'" type="mention">mention</button>
+
+    <% if (request.getSession().getAttribute("user") != null) { %>
+    <form action="/chat/<%= conversation.getTitle() %>" method="POST">
+        <input id = "chatSpace" type="text" name="message"> 
+
       
       <% List<User> users =(List<User>) request.getAttribute("usersInConversation"); %>
         <select id = "currentUsers" onchange = "mention()">
         <%System.out.println(users);%> <!-- For testing -->
+        
+        <option value = "" disabled selected hidden>Conversation Members</option>
+
 
         <% for (User user: users){ %>
         <%if(user.getName() == null){
@@ -114,9 +129,9 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         }%>
         <option value="<%= user.getName() %>"><%= user.getName()%></option>
         }
-        <option value = "test">test</option>
-
+  
         <%}%>
+
         </select>
         <br/>
         <button type="submit">Send text</button>
@@ -134,9 +149,10 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 
   <hr/>
 
-</div>
 
-</body>
+  </div>
+
+
 </html>
 <!-- 
  PSEUDO CODE
@@ -156,3 +172,4 @@ Upon clicking a user name, grab the element text and insert it into the text bar
 
 
  -->
+
