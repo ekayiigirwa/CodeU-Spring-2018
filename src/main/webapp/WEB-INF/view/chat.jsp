@@ -58,7 +58,7 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
   function scrollChat() {
     var chatDiv = document.getElementById('chat');
     chatDiv.scrollTop = chatDiv.scrollHeight;
-  };
+  }
 </script>
 </head>
 <body onload="scrollChat()">
@@ -73,8 +73,9 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
   <% } %>
   <a href="/about.jsp">About</a>
   <a href="/activityfeed">Activity Feed</a>
-  <% if((request.getSession().getAttribute("user") != null)){ %>
-    	<a href="/logout">Logout</a> <% } %>
+  <% if(request.getSession().getAttribute("user") != null){ %>
+    	<a href="/logout">Logout</a> 
+    	<% } %>
 </nav>
 
 <div id="container">
@@ -101,14 +102,12 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         <span style = "font-weight:normal"><%= message.getContent() %></span>
       <%  
        }
+}
       %>
     </ul>
   </div>
 
   <hr/>
-
-  <% if (request.getSession().getAttribute("user") != null) { %>
-  <form action="/chat/<%= conversation.getTitle() %>" method="post">
 
 
     <% if (request.getSession().getAttribute("user") != null) { %>
@@ -128,7 +127,6 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
           continue;
         }%>
         <option value="<%= user.getName() %>"><%= user.getName()%></option>
-        }
   
         <%}%>
 
