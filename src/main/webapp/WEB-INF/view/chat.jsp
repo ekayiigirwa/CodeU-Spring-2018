@@ -1,17 +1,17 @@
 <%--
-  Copyright 2017 Google Inc.
+Copyright 2017 Google Inc.
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+   http://www.apache.org/licenses/LICENSE-2.0
 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 --%>
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
@@ -27,63 +27,65 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 
 <!DOCTYPE html>
 <html>
+
 <head>
+<%-- <meta charset="utf-8" > 
+--%>
+<title><%= conversation.getTitle() %></title>
+<link rel="stylesheet" href="/css/main.css" type="text/css">
 
-  <title><%= conversation.getTitle() %></title>
-  <link rel="stylesheet" href="/css/main.css" type="text/css">
+<style>
+  #chat {
+    background-color: white;
+    height: 500px;
+    overflow-y: scroll
+  }
+</style>
 
-  <style>
-    #chat {
-      background-color: white;
-      height: 500px;
-      overflow-y: scroll
-    }
-  </style>
-
-  <script>
-   
-    /*
+<script>
+  /*
      * Adds text fromt the selected item on the drop-down list to the input field
      */
 
-     var isMentioned = false;
-    function mention(){
+     function mention(){
       var x = document.getElementById("currentUsers").value;
       var y = document.getElementById("chatSpace").value + "@" + x;
       document.getElementById("chatSpace").value = y;
       console.log(x);
-
-      isMentioned = true;
     }
 
-     // scroll the chat div to the bottom
-    function scrollChat() {
-      var chatDiv = document.getElementById('chat');
-      chatDiv.scrollTop = chatDiv.scrollHeight;
-    }
-  </script>
+  // scroll the chat div to the bottom
+  function scrollChat() {
+    var chatDiv = document.getElementById('chat');
+    chatDiv.scrollTop = chatDiv.scrollHeight;
+  }
+</script>
 </head>
 <body onload="scrollChat()">
 
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
-      <% if (request.getSession().getAttribute("user") != null) { %>
-    <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else { %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-  </nav>
+<nav>
+  <a id="navTitle" href="/">Bagheera Band 33</a>
+  <a href="/conversations">Conversations</a>
+    <% if (request.getSession().getAttribute("user") != null) { %>
+  <a href = "/profile" > Hello <%= request.getSession().getAttribute("user") %> ! </a>
+  <% } else { %>
+    <a href="/login">Login</a>
+  <% } %>
+  <a href="/about.jsp">About</a>
+  <a href="/activityfeed">Activity Feed</a>
+  <% if(request.getSession().getAttribute("user") != null){ %>
+    	<a href="/logout">Logout</a> 
+    	<% } %>
+</nav>
 
-  <div id="container">
+<div id="container">
 
-    <h1><%= conversation.getTitle() %>
-      <a href="" style="float: right">&#8635;</a></h1>
+  <h1><%= conversation.getTitle() %>
+    <a href="" style="float: right">&#8635;</a></h1>
 
-    <hr/>
+  <hr/>
 
-    <div id="chat">
+ <div id="chat">
       <ul>
     <%
       String currentUserName= "@" + request.getSession().getAttribute("user");
@@ -100,26 +102,23 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         <span style = "font-weight:normal"><%= message.getContent() %></span>
       <%  
        }
+}
       %>
+    </ul>
+  </div>
 
-      </li>
-    <%
-      }
-    %>
-      </ul>
-    </div>
+  <hr/>
 
-    <hr/>
+  <!-- <% //if (request.getSession().getAttribute("user") != null) { %>
+  <form action="/chat/<%= conversation.getTitle() %>" method="post"> -->
+
 
     <% if (request.getSession().getAttribute("user") != null) { %>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST">
         <input id = "chatSpace" type="text" name="message"> 
 
       
-<%
-    List<User> users =
-      (List<User>) request.getAttribute("usersInConversation");
-      %>
+      <% List<User> users =(List<User>) request.getAttribute("usersInConversation"); %>
         <select id = "currentUsers" onchange = "mention()">
         <%System.out.println(users);%> <!-- For testing -->
         
@@ -130,38 +129,48 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
         <%if(user.getName() == null){
           continue;
         }%>
-         <option value="<%= user.getName() %>"><%= user.getName()%></option>
-        }
+        <option value="<%= user.getName() %>"><%= user.getName()%></option>
   
         <%}%>
 
         </select>
         <br/>
-        <button type="submit">Send</button>
-    </form>
-    <% } else { %>
-      <p><a href="/login">Login</a> to send a message.</p>
-    <% } %>
+        <button type="submit">Send text</button>
+       
+        <input type = "submit" name="emoticon" value= &#x1F601;>
+        <input type = "submit" name="emoticon" value= &#x1F60D;>
+        <input type = "submit" name="emoticon" value= &#x1F44D;>
+        <input type = "submit" name="emoticon" value= &#x1F44E;>
+        <input type = "submit" name="emoticon" value= &#x1F914;>
+        <br/><br/>
+  </form>
+  <% } else { %>
+    <p><a href="/login">Login</a> to send a message.</p>
+  <% } %>
 
-    <hr/>
+  <hr/>
+
 
   </div>
-    <li>
-      <ul>
-        
 
-      </ul>
-    </li>
 
-    <!--- testing purposes only -->
-    <div>
-        <%
-        for (Message message : messages) {
-        
-        System.out.println(message);
-        }
-    %>
-        
-    </div>
-</body>
 </html>
+<!-- 
+ PSEUDO CODE
+
+ to get drop down list of users, ensure that you have a list of users fomr the conversation being worked on at the time.
+
+ Once you have a list of those users, use a loop and the select tag to create a list of all users in the conversation
+
+ for prototype purposes, create a dropdown with all the users in the app.
+
+ -->
+
+ <!--
+ PSEUDO CODE FOR NAME INSERT
+
+Upon clicking a user name, grab the element text and insert it into the text bar
+
+
+ -->
+
