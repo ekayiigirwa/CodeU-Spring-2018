@@ -109,9 +109,6 @@ UserStore userStores = (UserStore) request.getAttribute("userStores");
 
   <hr/>
 
-  <!-- <% //if (request.getSession().getAttribute("user") != null) { %>
-  <form action="/chat/<%= conversation.getTitle() %>" method="post"> -->
-
 
     <% if (request.getSession().getAttribute("user") != null) { %>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST">
